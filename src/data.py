@@ -5,7 +5,7 @@ import pandas as pd
 from gensim.models import Word2Vec
 from sklearn.preprocessing import label_binarize
 
-from w2v import *
+from src.w2v import *
 
 
 class Data:

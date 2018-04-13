@@ -5,7 +5,7 @@ import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem.snowball import SnowballStemmer
 
-from utils.file_utils import read_documents, file_len
+from src.utils.file_utils import read_documents, file_len
 
 # import mpld3
 

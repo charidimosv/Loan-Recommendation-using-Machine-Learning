@@ -13,9 +13,9 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 
-from beat_the_benchmark_classifier import BeatTheBenchmarkClassifier
-from data import Data
-from w2v import *
+from src.beat_the_benchmark_classifier import BeatTheBenchmarkClassifier
+from src.data import Data
+from src.w2v import *
 
 # Resource related properties -------------------------------------------------
 RESOURCES_PATH = "../resources/"
@@ -223,6 +223,8 @@ if __name__ == '__main__':
 
     print("Plotting ROC Curve...")
     t1 = time()
+
+
     plot_roc_curve(metrics_scores)
     t2 = time()
     print("Completed plot in " + str(
