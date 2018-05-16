@@ -8,4 +8,4 @@ matplotlib
 image
 sklearn
 pandas
-
+seaborn
