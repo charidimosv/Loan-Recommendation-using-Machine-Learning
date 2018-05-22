@@ -22,7 +22,7 @@ class Corpus:
         self.dataset_file = dataset_file
         self.has_header = has_header
         self.stop_words = stop_words
-        self.stop_words.update(['one', 'two', 'three', 'first', 'also', 'since'])
+        self.stop_words.update(["one", "two", "three", "first", "also", "since"])
         self.top_categories_with_frequencies = {}
         self.stemmer = SnowballStemmer("english")
         self.kmeans(DOC_TITLE_IDX, DOC_CONTENT_IDX)
@@ -44,31 +44,31 @@ class Corpus:
             allwords_tokenized = self.tokenize_only(content)
             totalvocab_tokenized.extend(allwords_tokenized)
 
-            vocab_frame = pd.DataFrame({'words': totalvocab_tokenized}, index=totalvocab_stemmed)
-            print('there are ' + str(vocab_frame.shape[0]) + ' items in vocab_frame')
+            vocab_frame = pd.DataFrame({"words": totalvocab_tokenized}, index=totalvocab_stemmed)
+            print("there are " + str(vocab_frame.shape[0]) + " items in vocab_frame")
 
     def tokenize_and_stem(self, text):
-        # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
+        # first tokenize by sentence, then by word to ensure that punctuation is caught as it"s own token
         tokens = [word for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]
         filtered_tokens = []
         # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)
         for token in tokens:
-            if re.search('[a-zA-Z]', token):
+            if re.search("[a-zA-Z]", token):
                 filtered_tokens.append(token)
         stems = [self.stemmer.stem(t) for t in filtered_tokens]
         return stems
 
     def tokenize_only(self, text):
-        # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
+        # first tokenize by sentence, then by word to ensure that punctuation is caught as it"s own token
         tokens = [word.lower() for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]
         filtered_tokens = []
         # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)
         for token in tokens:
-            if re.search('[a-zA-Z]', token):
+            if re.search("[a-zA-Z]", token):
                 filtered_tokens.append(token)
         return filtered_tokens
 
 
-if __name__ == '__main__':
-    corpus = Corpus(DATASET, True, set(stopwords.words('english')))
+if __name__ == "__main__":
+    corpus = Corpus(DATASET, True, set(stopwords.words("english")))
     print("Done")

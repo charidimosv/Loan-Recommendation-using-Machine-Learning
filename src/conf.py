@@ -5,8 +5,12 @@ TRAIN_DATASET = "train.csv"
 TEST_DATASET = "test.csv"
 
 RESOURCES_PATH = "../resources/"
+
 INPUT_PATH = RESOURCES_PATH + "input/"
 OUTPUT_PATH = RESOURCES_PATH + "output/"
+
+PICTURE_PATH = OUTPUT_PATH + "pics/"
+SUBMISSION_PATH = OUTPUT_PATH + "submission/"
 
 FORMAT_PNG = ".png"
 
@@ -17,8 +21,8 @@ DOC_TITLE_IDX = 2
 DOC_CONTENT_IDX = 3
 
 
-COL_RESULT = 'SalePrice'
+COL_RESULT = "SalePrice"
 
 COL_INDEX = "Id"
-COL_SEP = ','
-COL_ENC = 'utf-8'
+COL_SEP = ","
+COL_ENC = "utf-8"

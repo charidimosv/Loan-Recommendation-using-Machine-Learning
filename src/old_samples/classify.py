@@ -40,7 +40,7 @@ def classification_test(model, pipeline_name, allData, _X_train=None):
     print("\tRunning 10-Fold test for: " + str(pipeline_name))
     k_fold = StratifiedKFold(n_splits=10, shuffle=False, random_state=20170218)
 
-    scores = ['accuracy', 'precision_micro', 'recall_micro', 'f1_micro']
+    scores = ["accuracy", "precision_micro", "recall_micro", "f1_micro"]
 
     metrics = {
         score: cross_val_score(model, X_train, y_train, cv=k_fold, n_jobs=-1, scoring=score).mean()
@@ -68,37 +68,37 @@ def classification_test(model, pipeline_name, allData, _X_train=None):
     mean_tpr /= k_fold.get_n_splits()
     mean_tpr[-1] = 1.0
 
-    metrics['roc_tpr_micro'] = mean_tpr
-    metrics['roc_fpr_micro'] = mean_fpr
-    metrics['roc_auc_micro'] = auc(mean_fpr, mean_tpr)
+    metrics["roc_tpr_micro"] = mean_tpr
+    metrics["roc_fpr_micro"] = mean_fpr
+    metrics["roc_auc_micro"] = auc(mean_fpr, mean_tpr)
 
     return metrics
 
 
 def plot_roc_curve(metrics):
-    colors = cycle(['aqua', 'indigo', 'seagreen', 'yellow', 'blue', 'darkorange'])
+    colors = cycle(["aqua", "indigo", "seagreen", "yellow", "blue", "darkorange"])
     lw = 2
 
     plt.figure()
 
     for class_name, color in zip(metrics, colors):
         metric = metrics[class_name]
-        plt.plot(metric['roc_fpr_micro'], metric['roc_tpr_micro'], color=color, lw=lw,
-                 label='{0} (AUC = {1:0.2f})'
-                       ''.format(class_name, metric['roc_auc_micro']))
-    plt.plot([0, 1], [0, 1], linestyle='--', lw=lw, color='k')
+        plt.plot(metric["roc_fpr_micro"], metric["roc_tpr_micro"], color=color, lw=lw,
+                 label="{0} (AUC = {1:0.2f})"
+                       "".format(class_name, metric["roc_auc_micro"]))
+    plt.plot([0, 1], [0, 1], linestyle="--", lw=lw, color="k")
 
     plt.xlim([-0.05, 1.05])
     plt.ylim([-0.05, 1.05])
-    plt.xlabel('False Positive Rate')
-    plt.ylabel('True Positive Rate')
-    plt.title('ROC curves of Different Classifiers')
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("ROC curves of Different Classifiers")
     plt.legend(loc="lower right")
 
-    plt.savefig(OUTPUT_PNG, bbox='tight')
+    plt.savefig(OUTPUT_PNG, bbox="tight")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     total_time_start = time()
     allData = Data(TRAIN_DATASET, TEST_DATASET)
 
@@ -109,10 +109,10 @@ if __name__ == '__main__':
     metrics_scores = {}
 
     # SVM (BoW)
-    classifier_feat_extraction_name.append('SVM (BoW)')
+    classifier_feat_extraction_name.append("SVM (BoW)")
     pipeline = Pipeline([
-        ('bow', CountVectorizer(max_features=n_features)),
-        ('clf', LinearSVC(C=1.0))
+        ("bow", CountVectorizer(max_features=n_features)),
+        ("clf", LinearSVC(C=1.0))
     ])
     t1 = time()
     metrics_scores[classifier_feat_extraction_name[classifier_method_idx]] = \
@@ -123,10 +123,10 @@ if __name__ == '__main__':
     print("________________________________________")
 
     # RandomForest (BoW)
-    classifier_feat_extraction_name.append('RandomForest (BoW)')
+    classifier_feat_extraction_name.append("RandomForest (BoW)")
     pipeline = Pipeline([
-        ('bow', CountVectorizer(max_features=n_features)),
-        ('forest', RandomForestClassifier(n_estimators=20))
+        ("bow", CountVectorizer(max_features=n_features)),
+        ("forest", RandomForestClassifier(n_estimators=20))
     ])
     t1 = time()
     metrics_scores[classifier_feat_extraction_name[classifier_method_idx]] = \
@@ -140,20 +140,20 @@ if __name__ == '__main__':
     # for 90% of features
     n_samples, n_components = CountVectorizer(max_features=n_features).fit_transform(allData.X_train,
                                                                                      allData.y_train).shape
-    svd_algorithm = 'arpack'
-    if svd_algorithm == 'arpack':
+    svd_algorithm = "arpack"
+    if svd_algorithm == "arpack":
         n_components = min(int(n_components * 0.9), int(n_samples / 2))
     else:
         n_components = int(n_components * 0.9)
 
     # SVM (SVD)
-    # algorithm = 'randomized' (default) crashes scikit https://github.com/scikit-learn/scikit-learn/issues/8183
-    classifier_feat_extraction_name.append('SVM (SVD)')
+    # algorithm = "randomized" (default) crashes scikit https://github.com/scikit-learn/scikit-learn/issues/8183
+    classifier_feat_extraction_name.append("SVM (SVD)")
     pipeline = Pipeline([
-        ('bow', CountVectorizer(max_features=n_features)),
-        # ('bow', CountVectorizer(ngram_range=(1, 2), max_features=200)),
-        ('lsa', TruncatedSVD(n_components=n_components, algorithm=svd_algorithm)),
-        ('clf', LinearSVC(C=1.0))
+        ("bow", CountVectorizer(max_features=n_features)),
+        # ("bow", CountVectorizer(ngram_range=(1, 2), max_features=200)),
+        ("lsa", TruncatedSVD(n_components=n_components, algorithm=svd_algorithm)),
+        ("clf", LinearSVC(C=1.0))
     ])
     t1 = time()
     metrics_scores[classifier_feat_extraction_name[classifier_method_idx]] = \
@@ -164,12 +164,12 @@ if __name__ == '__main__':
     print("________________________________________")
 
     # RandomForest (SVD)
-    classifier_feat_extraction_name.append('RandomForest (SVD)')
+    classifier_feat_extraction_name.append("RandomForest (SVD)")
     pipeline = Pipeline([
-        ('bow', CountVectorizer(max_features=n_features)),
-        # ('bow', CountVectorizer(ngram_range=(1, 2), max_features=200)),
-        ('lsa', TruncatedSVD(n_components=n_components, algorithm=svd_algorithm)),
-        ('clf', RandomForestClassifier(n_estimators=20))
+        ("bow", CountVectorizer(max_features=n_features)),
+        # ("bow", CountVectorizer(ngram_range=(1, 2), max_features=200)),
+        ("lsa", TruncatedSVD(n_components=n_components, algorithm=svd_algorithm)),
+        ("clf", RandomForestClassifier(n_estimators=20))
     ])
     t1 = time()
     metrics_scores[classifier_feat_extraction_name[classifier_method_idx]] = \
@@ -180,9 +180,9 @@ if __name__ == '__main__':
     print("________________________________________")
 
     # SVM (W2V)
-    classifier_feat_extraction_name.append('SVM (W2V)')
+    classifier_feat_extraction_name.append("SVM (W2V)")
     pipeline = Pipeline([
-        ('clf', LinearSVC(C=1.0))
+        ("clf", LinearSVC(C=1.0))
     ])
     t1 = time()
     metrics_scores[classifier_feat_extraction_name[classifier_method_idx]] = \
@@ -195,9 +195,9 @@ if __name__ == '__main__':
     print("________________________________________")
 
     # RandomForest (W2V)
-    classifier_feat_extraction_name.append('RandomForest (W2V)')
+    classifier_feat_extraction_name.append("RandomForest (W2V)")
     pipeline = Pipeline([
-        ('clf', RandomForestClassifier(n_estimators=20))
+        ("clf", RandomForestClassifier(n_estimators=20))
     ])
     t1 = time()
     metrics_scores[classifier_feat_extraction_name[classifier_method_idx]] = \
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     print("________________________________________")
 
     # BeatTheBenchmarkClassifier (BTBC)
-    classifier_feat_extraction_name.append('BTBC')
+    classifier_feat_extraction_name.append("BTBC")
     docs_classification = BeatTheBenchmarkClassifier(data=allData)
     pipeline = docs_classification.classify()
     t1 = time()
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     print("________________________________________")
 
     # Create pandas DataFrame to generate EvaluationMetric 10-fold CSV output.
-    proper_labels = ['Accuracy', 'Precision', 'Recall', 'F-Measure', 'AUC']
+    proper_labels = ["Accuracy", "Precision", "Recall", "F-Measure", "AUC"]
 
 
     def rename_labels(metrics_dict, label, proper_label):
@@ -241,14 +241,14 @@ if __name__ == '__main__':
 
 
     for k, v in metrics_scores.items():
-        del metrics_scores[k]['roc_fpr_micro']
-        del metrics_scores[k]['roc_tpr_micro']
+        del metrics_scores[k]["roc_fpr_micro"]
+        del metrics_scores[k]["roc_tpr_micro"]
         # Rename metrics to proper ones
-        rename_labels(metrics_scores[k], 'accuracy', proper_labels[0])
-        rename_labels(metrics_scores[k], 'precision_micro', proper_labels[1])
-        rename_labels(metrics_scores[k], 'recall_micro', proper_labels[2])
-        rename_labels(metrics_scores[k], 'f1_micro', proper_labels[3])
-        rename_labels(metrics_scores[k], 'roc_auc_micro', proper_labels[4])
+        rename_labels(metrics_scores[k], "accuracy", proper_labels[0])
+        rename_labels(metrics_scores[k], "precision_micro", proper_labels[1])
+        rename_labels(metrics_scores[k], "recall_micro", proper_labels[2])
+        rename_labels(metrics_scores[k], "f1_micro", proper_labels[3])
+        rename_labels(metrics_scores[k], "roc_auc_micro", proper_labels[4])
 
     df = pd.DataFrame(metrics_scores, index=proper_labels, columns=classifier_feat_extraction_name)
     # Generate CSV output

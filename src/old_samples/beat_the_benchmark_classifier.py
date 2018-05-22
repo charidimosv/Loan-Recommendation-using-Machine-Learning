@@ -24,8 +24,8 @@ TEST_SET_CATEGORIES_OUTPUT_CSV = "testSet_categories.csv"
 class BeatTheBenchmarkClassifier:
     def __init__(self, train_set_file=None, test_set_file=None, data=None):
         # Fields ----------------------------------------------------
-        self.stop_words = set(stopwords.words('english'))
-        self.stop_words.update(['one', 'two', 'three', 'first', 'also', 'since'])
+        self.stop_words = set(stopwords.words("english"))
+        self.stop_words.update(["one", "two", "three", "first", "also", "since"])
         self.stemmer = SnowballStemmer("english")
 
         if data is None and train_set_file is not None and test_set_file is not None:
@@ -34,12 +34,12 @@ class BeatTheBenchmarkClassifier:
             self.data = data
 
     def tokenize_and_stem(self, text):
-        # first tokenize by sentence, then by word to ensure that punctuation is caught as it's own token
+        # first tokenize by sentence, then by word to ensure that punctuation is caught as it"s own token
         tokens = [word for sent in nltk.sent_tokenize(text) for word in nltk.word_tokenize(sent)]
         filtered_tokens = []
         # filter out any tokens not containing letters (e.g., numeric tokens, raw punctuation)
         for token in tokens:
-            if re.search('[a-zA-Z]', token):
+            if re.search("[a-zA-Z]", token):
                 filtered_tokens.append(token)
         stems = [self.stemmer.stem(t) for t in filtered_tokens]
         return stems
@@ -49,12 +49,12 @@ class BeatTheBenchmarkClassifier:
         # http://stackoverflow.com/questions/9299346/fastest-svm-implementation-usable-in-python
         # Split the dataset
         parameters = {
-            'vect__min_df': (0.1, 0.15, 0.2, 0.3),
-            'vect__max_df': (0.8, 0.85, 0.9),
-            'vect__ngram_range': ((1, 1), (1, 2)),  # uni-grams or bi-grams
+            "vect__min_df": (0.1, 0.15, 0.2, 0.3),
+            "vect__max_df": (0.8, 0.85, 0.9),
+            "vect__ngram_range": ((1, 1), (1, 2)),  # uni-grams or bi-grams
 
-            # 'clf__alpha': (0.00001, 0.000001),
-            # 'clf__penalty': ('l2', 'elasticnet'),
+            # "clf__alpha": (0.00001, 0.000001),
+            # "clf__penalty": ("l2", "elasticnet"),
         }
         grid_search = GridSearchCV(text_clf, parameters, n_jobs=-1)
         print("Performing grid search...")
@@ -76,22 +76,22 @@ class BeatTheBenchmarkClassifier:
     def classify(self):
         # Define pipeline for text feature extraction with an SVM classifier
         text_clf = Pipeline([
-            ('vect', CountVectorizer(max_features=200)),
-            ('tfidf', TfidfTransformer()),
-            ('clf', LinearSVC(C=1.0))
+            ("vect", CountVectorizer(max_features=200)),
+            ("tfidf", TfidfTransformer()),
+            ("clf", LinearSVC(C=1.0))
         ])
         best_parameters = self.find_best_params(text_clf)
 
         # Create new pipeline with best parameters
         text_clf_best_params = Pipeline([
-            ('vect', CountVectorizer(
+            ("vect", CountVectorizer(
                 max_features=200,
-                min_df=best_parameters['vect__min_df'],
-                max_df=best_parameters['vect__max_df'],
-                ngram_range=best_parameters['vect__ngram_range'],
+                min_df=best_parameters["vect__min_df"],
+                max_df=best_parameters["vect__max_df"],
+                ngram_range=best_parameters["vect__ngram_range"],
                 stop_words=self.stop_words, tokenizer=self.tokenize_and_stem)),
-            ('tfidf', TfidfTransformer()),
-            ('clf', LinearSVC(C=1.0))
+            ("tfidf", TfidfTransformer()),
+            ("clf", LinearSVC(C=1.0))
         ])
 
         print("\nFitting our model to the training data...")
@@ -109,18 +109,18 @@ class BeatTheBenchmarkClassifier:
         # Create two series
         print("Generating CSV output for test data...")
         start = time()
-        test_document_ids_series = pd.Series(self.data.test_data.index.values, name='Test_Document_ID')
-        predicted_document_categ_series = pd.Series(predicted_test_data_categories, name='Predicted_Category')
+        test_document_ids_series = pd.Series(self.data.test_data.index.values, name="Test_Document_ID")
+        predicted_document_categ_series = pd.Series(predicted_test_data_categories, name="Predicted_Category")
 
         document_id_category_name_test_data = \
             pd.concat([test_document_ids_series, predicted_document_categ_series], axis=1)
-        document_id_category_name_test_data.to_csv(TEST_SET_CATEGORIES_OUTPUT_CSV, sep='\t', index=False)
+        document_id_category_name_test_data.to_csv(TEST_SET_CATEGORIES_OUTPUT_CSV, sep="\t", index=False)
         print("Completed in: " + str(round(time() - start)) + "s")
 
         return text_clf_best_params
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     total_start_time = time()
     docs_classification = BeatTheBenchmarkClassifier(train_set_file=TRAIN_DATASET, test_set_file=TEST_DATASET)
     docs_classification.classify()

@@ -34,7 +34,7 @@ def makeFeatureVec(words, model, num_features):
     featureVec = np.zeros((num_features,), dtype="float32")
     nwords = 0
     index2word_set = set(model.index2word)
-    # Loop over each word in the review and, if it is in the model's
+    # Loop over each word in the review and, if it is in the model"s
     # vocaublary, add its feature vector to the total
     for word in words:
         if word in index2word_set:

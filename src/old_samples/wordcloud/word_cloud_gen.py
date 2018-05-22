@@ -37,8 +37,8 @@ class Corpus:
         self.most_common_words_number = k
         self.has_header = has_header
         self.stop_words = stop_words
-        self.stop_words.update(['one', 'two', 'three', 'first', 'last', 'also', 'since', '\s', 'could', 'would', 'may',
-                                'much', 'says'])
+        self.stop_words.update(["one", "two", "three", "first", "last", "also", "since", "\s", "could", "would", "may",
+                                "much", "says"])
         self.top_categories_with_frequencies = {}
         self.lemmatizer = WordNetLemmatizer()
         self.generate_word_cloud(DOCUMENT_IDX)
@@ -83,7 +83,7 @@ class Corpus:
         plt.imshow(word_cloud)
         plt.axis("off")
         plt.savefig(WORD_CLOUD_OUTPUT_FILENAME, format=WORD_CLOUD_OUTPUT_FORMAT,
-                    bbox_inches='tight', pad_inches=0, aspect='normal', dpi=WORD_CLOUD_OUTPUT_DPI)
+                    bbox_inches="tight", pad_inches=0, aspect="normal", dpi=WORD_CLOUD_OUTPUT_DPI)
         print("Word cloud was generated and saved as a file at:\n\t" + os.path.abspath(WORD_CLOUD_OUTPUT_FILENAME))
         plt.show()
 
@@ -91,33 +91,33 @@ class Corpus:
 # Utilities
 def update_progress(amount_done):
     sys.stdout.write(
-        "\rTokenizing documents: [{0:50s}] {1:.1f}%".format('#' * int(amount_done * 50), amount_done * 100))
+        "\rTokenizing documents: [{0:50s}] {1:.1f}%".format("#" * int(amount_done * 50), amount_done * 100))
 
 
 def main(argv):
     input_file = None
     k = -1
 
-    parser = argparse.ArgumentParser(description='Generate word cloud from CSV.')
-    parser.add_argument('-i', '--input-file', type=str, default='wordcloud/example_input.txt', help='input CSV file',
+    parser = argparse.ArgumentParser(description="Generate word cloud from CSV.")
+    parser.add_argument("-i", "--input-file", type=str, default="wordcloud/example_input.txt", help="input CSV file",
                         required=False)
-    parser.add_argument('-k', type=int, default=500,
-                        help='k most common words to generate the word cloud [default: 500]')
+    parser.add_argument("-k", type=int, default=500,
+                        help="k most common words to generate the word cloud [default: 500]")
 
     args = parser.parse_args()
     input_file = args.input_file
     k = args.k
 
     print("Will generate WordCloud for [" + input_file + "] with [" + str(k) + "] most common words.")
-    Corpus(input_file, k, True, set(stopwords.words('english')))
+    Corpus(input_file, k, True, set(stopwords.words("english")))
     print("Done")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if sys.version_info < (3, 0):
-        print("python-version > 3.0 isn't satisfied, exiting...")
+        print("python-version > 3.0 isn"t satisfied, exiting...")
     try:
-        nltk.data.find('wordnet')
+        nltk.data.find("wordnet")
     except LookupError:
-        nltk.download('wordnet')
+        nltk.download("wordnet")
     main(sys.argv)
