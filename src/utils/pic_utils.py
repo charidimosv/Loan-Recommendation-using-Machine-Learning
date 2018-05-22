@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from src.conf import *
+from src.utils.conf import *
 
 
 def save_figure(filename):

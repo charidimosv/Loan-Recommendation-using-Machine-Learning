@@ -3,7 +3,6 @@ import warnings
 from scipy.special import boxcox1p
 from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin, clone
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import ElasticNet, Lasso
 from sklearn.model_selection import KFold
@@ -28,7 +27,7 @@ warnings.warn = ignore_warn
 
 pd.set_option("display.float_format", lambda x: "{:.3f}".format(x))
 
-from src.conf import *
+from src.utils.conf import *
 import pandas as pd
 from sklearn.model_selection import cross_val_score
 from scipy.stats import skew

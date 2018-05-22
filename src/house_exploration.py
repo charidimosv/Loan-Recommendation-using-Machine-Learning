@@ -13,7 +13,7 @@ from sklearn.model_selection import KFold, cross_val_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, RobustScaler
 
-from src.conf import *
+from src.utils.conf import *
 from src.models.StackingAveragedModels import StackingAveragedModels
 
 
