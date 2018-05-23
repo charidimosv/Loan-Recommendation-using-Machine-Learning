@@ -14,7 +14,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, RobustScaler
 
 from src.utils.conf import *
-from src.models.StackingAveragedModels import StackingAveragedModels
+from src.supervised_learning.models.StackingAveragedModels import StackingAveragedModels
 
 
 # from src.utils.pic_utils import pic_utils
