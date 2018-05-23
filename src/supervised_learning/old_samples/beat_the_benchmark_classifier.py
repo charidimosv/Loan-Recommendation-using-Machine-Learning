@@ -11,7 +11,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 
-from src.old_samples.data import Data
+from src.supervised_learning.old_samples.data import Data
 
 # Resource related properties -------------------------------------------------
 RESOURCES_PATH = "../resources/"

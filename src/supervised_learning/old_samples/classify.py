@@ -13,9 +13,9 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.svm import LinearSVC
 
-from src.old_samples.beat_the_benchmark_classifier import BeatTheBenchmarkClassifier
-from src.old_samples.data import Data
-from src.old_samples.w2v import *
+from src.supervised_learning.old_samples.beat_the_benchmark_classifier import BeatTheBenchmarkClassifier
+from src.supervised_learning.old_samples.data import Data
+from src.supervised_learning.old_samples.w2v import *
 
 # Resource related properties -------------------------------------------------
 RESOURCES_PATH = "../resources/"
