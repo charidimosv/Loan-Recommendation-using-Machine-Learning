@@ -1,7 +1,7 @@
 import warnings
 
 import pandas as pd
-from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import ElasticNet, Lasso
 from sklearn.pipeline import make_pipeline
@@ -23,11 +23,7 @@ if __name__ == "__main__":
     df_train = pd.read_csv(TRAIN_PATH)
     df_test = pd.read_csv(TEST_PATH)
 
-    house_regr = HousePriceRegressor(df_train, df_test)
-
-    # r_forest = RandomForestRegressor(n_estimators=300, random_state=0)
-    # house_regr.print_rmsle_cv(r_forest)
-
+    r_forest = RandomForestRegressor(n_estimators=300, random_state=0)
     lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.0005, random_state=1))
     ENet = make_pipeline(RobustScaler(), ElasticNet(alpha=0.0005, l1_ratio=.9, random_state=3))
     KRR = KernelRidge(alpha=0.6, kernel="polynomial", degree=2, coef0=2.5)
@@ -38,9 +34,17 @@ if __name__ == "__main__":
     stacked_averaged_models = StackingAveragedModels(base_models=(ENet, GBoost, KRR),
                                                      meta_model=lasso)
 
+    house_regr = HousePriceRegressor(df_train, df_test, r_forest)
+    # house_regr = HousePriceRegressor()
+
+    # house_regr.print_rmsle_cv(r_forest)
     house_regr.print_rmsle_cv(lasso)
-    # house_regr.print_rmsle_cv(ENet)
-    # house_regr.print_rmsle_cv(KRR)
-    # house_regr.print_rmsle_cv(GBoost)
-    # house_regr.print_rmsle_cv(stacked_averaged_models)
-    test_pred = house_regr.predict(stacked_averaged_models)
+    # house_regr.print_rmsle_cv(ENet, 5)
+    # house_regr.print_rmsle_cv(KRR, 5)
+    # house_regr.print_rmsle_cv(GBoost, 5)
+    # house_regr.print_rmsle_cv(stacked_averaged_models, 5)
+
+    # house_regr.prepare_test_data(df_test)
+
+    test_pred = house_regr.predict()
+    test_pred = house_regr.predict(df_test)

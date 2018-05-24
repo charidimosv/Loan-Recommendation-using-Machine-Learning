@@ -3,7 +3,7 @@
 TRAIN_DATASET = "train.csv"
 TEST_DATASET = "test.csv"
 
-RESOURCES_PATH = "../resources/"
+RESOURCES_PATH = "./resources/"
 
 INPUT_PATH = RESOURCES_PATH + "input/"
 OUTPUT_PATH = RESOURCES_PATH + "output/"
