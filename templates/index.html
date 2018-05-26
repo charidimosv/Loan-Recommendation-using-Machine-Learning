@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+
+{% include "header.html" %}
+
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav">
+<div class="wrapper">
+
+    {% include "navbar.html" %}
+    <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        General Form Elements
+        <small>Preview</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Forms</a></li>
+        <li class="active">General Elements</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Real Estate Preferances</h3>
+            </div>
+              <form role="form" id="BasementForm" action="">
+                <div class="box-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group label-default"><label>Basement' s Areas (in square feet)</label></div>
+                          <div class="hidden"><input type="text" id="Id" name="Id" value="0"></div>
+                          <div class="col-md-4">
+                            <!-- select -->
+                            <div class="form-group">
+                              <label for="TotalBsmtSF">Total Basement Area</label>
+                              <input type="text" class="form-control" id="TotalBsmtSF" name="TotalBsmtSF" placeholder="Total Basement Area"  value="{{ basement_data['TotalBsmtSF'] }}">
+                            </div>
+                            <div class="form-group">
+                              <label for="1stFlrSF">First Floor Area</label>
+                              <input type="text" class="form-control" id="1stFlrSF" name="1stFlrSF" placeholder="First Floor Area" value="{{ basement_data['1stFlrSF'] }}">
+                            </div>
+                            <div class="form-group">
+                              <label for="OpenPorchSF">Open Porch Area</label>
+                              <input type="text" class="form-control" id="OpenPorchSF" name="OpenPorchSF" placeholder="Open Porch Area" value="{{ basement_data['OpenPorchSF'] }}">
+                            </div>
+                            <div class="form-group">
+                              <label for="BsmtFinSF1">Finished Area</label>
+                              <input type="text" class="form-control" id="BsmtFinSF1" name="BsmtFinSF1" placeholder="Finished Area" value="{{ basement_data['BsmtFinSF1'] }}">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="GrLivArea">Above Grade Area</label>
+                                <input type="text" class="form-control" id="GrLivArea" name="GrLivArea" placeholder="Above Grade Area" value="{{ basement_data['GrLivArea'] }}">
+                            </div>
+                            <div class="form-group">
+                              <label for="2ndFlrSF">Second Floor Area</label>
+                              <input type="text" class="form-control" id="2ndFlrSF" name="2ndFlrSF" placeholder="Second Floor Area" value="{{ basement_data['2ndFlrSF'] }}">
+                            </div>
+                            <div class="form-group">
+                              <label for="ScreenPorch">Screen Porch Area</label>
+                              <input type="text" class="form-control" id="ScreenPorch" name="ScreenPorch" placeholder="Screen Porch Area" value="{{ basement_data['ScreenPorch'] }}">
+                            </div>
+                            <div class="form-group">
+                              <label for="BsmtUnfSF">Finished Area</label>
+                              <input type="text" class="form-control" id="BsmtUnfSF" name="BsmtUnfSF" placeholder="Unfinished Area" value="{{ basement_data['BsmtUnfSF'] }}">
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="GarageYrBlt">Lot Area</label>
+                                <input type="text" class="form-control" id="LotArea" name="LotArea" placeholder="Lot Area" value="{{ basement_data['LotArea'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="WoodDeckSF">Wood Decks Area</label>
+                                <input type="text" class="form-control" id="WoodDeckSF" name="WoodDeckSF" placeholder="Wood Decks Area" value="{{ basement_data['WoodDeckSF'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="MasVnrArea">Three Season Porch Area</label>
+                                <input type="text" class="form-control" id="3SsnPorch" name="3SsnPorch" placeholder="Three Season Porch Area" value="{{ basement_data['3SsnPorch'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="MasVnrArea">Masonry Veneer Area</label>
+                                <input type="text" class="form-control" id="MasVnrArea" name="MasVnrArea" placeholder="Masonry Veneer Area" value="{{ basement_data['MasVnrArea'] }}">
+                            </div>
+                          </div>
+                      </div>
+                   </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group label-default"><label>Basement' s Rooms</label></div>
+                           <div class="col-md-3">
+                            <!-- select -->
+                            <div class="form-group">
+                              <label>Full Baths Ab. Grade</label>
+                              <select name="FullBath" class="form-control"  style="width: 100%;">
+                                <option selected="selected" value="NA">Select</option>
+                                <option value="0">Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label>Rooms Ab. Grade</label>
+                              <select name="TotRmsAbvGrd" class="form-control"  style="width: 100%;">
+                                <option selected="selected" value="NA">Select</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="5">Five</option>
+                                <option value="6">Six</option>
+                                <option value="7">Seven</option>
+                                <option value="8">Eight</option>
+                                <option value="9">Nine</option>
+                                <option value="10">Ten</option>
+                                <option value="11">Eleven</option>
+                                <option value="12">Twelve</option>
+                                <option value="13">Thirteen</option>
+                                <option value="14">Fourteen</option>
+                                <option value="15">Fifteen</option>
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label>Garage Car capacity</label>
+                              <select name="GarageCars" class="form-control"  style="width: 100%;">
+                                <option selected="selected" value="NA">Select</option>
+                                <option value="0">Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                                <option value="5">Five</option>
+                              </select>
+                            </div>
+                          </div>
+                           <div class="col-md-3">
+                               <div class="form-group">
+                          <label>Total Full Baths</label>
+                          <select name="BsmtFullBath" class="form-control"  style="width: 100%;">
+                            <option selected="selected" value="NA">Select</option>
+                            <option value="0">Zero</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            <option value="4">Four</option>
+                          </select>
+                        </div>
+                               <div class="form-group">
+                          <label>Bedrooms Ab. Grade</label>
+                          <select name="BedroomAbvGr" class="form-control"  style="width: 100%;">
+                            <option selected="selected" value="NA">Select</option>
+                            <option value="0">Zero</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                            <option value="4">Four</option>
+                            <option value="5">Five</option>
+                            <option value="6">Six</option>
+                          </select>
+                        </div>
+                               <div class="form-group">
+                                <label for="GarageArea">Size of Garage</label>
+                                <input type="text" class="form-control" id="GarageArea" name="GarageArea" placeholder="Size of Garage" value="{{ basement_data['GarageArea'] }}">
+                            </div>
+                           </div>
+                           <div class="col-md-3">
+                                <!-- select -->
+                                <div class="form-group">
+                          <label>Half Baths Ab. Grade</label>
+                          <select name="HalfBath" class="form-control"  style="width: 100%;">
+                            <option selected="selected" value="NA">Select</option>
+                            <option value="0">Zero</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                          </select>
+                        </div>
+                               <!-- select -->
+                                <div class="form-group">
+                              <label>Fireplaces</label>
+                              <select name="Fireplaces" class="form-control"  style="width: 100%;">
+                                <option selected="selected" value="NA">Select</option>
+                                <option value="0">Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                                <option value="4">Four</option>
+                              </select>
+                            </div>
+                                <div class="form-group">
+                                    <label for="GarageYrBlt">Year Garage was Built</label>
+                                    <input type="text" class="form-control" id="GarageYrBlt" name="GarageYrBlt" placeholder="Year garage was built" value="{{ basement_data['GarageYrBlt'] }}">
+                            </div>
+                            </div>
+                           <div class="col-md-3">
+                               <div class="form-group">
+                              <label>Total Half Baths</label>
+                              <select name="BsmtHalfBath" class="form-control"  style="width: 100%;">
+                                <option selected="selected" value="NA">Select</option>
+                                <option value="0">Zero</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                              </select>
+                            </div>
+                               <div class="form-group">
+                          <label>Pool Area</label>
+                          <select name="PoolArea" class="form-control"  style="width: 100%;">
+                            <option selected="selected" value="NA">Select</option>
+                            <option>0</option>
+                            <option>480</option>
+                            <option>512</option>
+                            <option>519</option>
+                            <option>555</option>
+                            <option>576</option>
+                            <option>648</option>
+                            <option>738</option>
+                          </select>
+                        </div>
+                               <div class="form-group">
+                                    <label for="LotFrontage">Street Connected</label>
+                                    <input type="text" class="form-control" id="LotFrontage" name="LotFrontage" placeholder="In linear feet" value="{{ basement_data['LotFrontage'] }}">
+                               </div>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group label-default"><label>Basement' s Other Characteristics</label></div>
+                          <div class="col-md-3">
+                               <div class="form-group">
+                                    <label for="YearBuilt">Year Built</label>
+                                    <input type="text" class="form-control" id="YearBuilt" name="YearBuilt" placeholder="e.g. 2003" value="{{ basement_data['YearBuilt'] }}">
+                               </div>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                    <label for="YearRemodAdd">Remodel Date</label>
+                                    <input type="text" class="form-control" id="YearRemodAdd" name="YearRemodAdd" placeholder="e.g. 2003" value="{{ basement_data['YearRemodAdd'] }}">
+                               </div>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                   <label>Month Sold</label>
+                                  <select name="MoSold" class="form-control"  style="width: 100%;">
+                                      <option selected="selected" value="NA">Select</option>
+                                      <option value="1">January</option>
+                                      <option value="2">February</option>
+                                      <option value="3">March</option>
+                                      <option value="4">April</option>
+                                      <option value="5">May</option>
+                                      <option value="6">June</option>
+                                      <option value="7">July</option>
+                                      <option value="8">August</option>
+                                      <option value="9">September</option>
+                                      <option value="10">October</option>
+                                      <option value="11">November</option>
+                                      <option value="12">December</option>
+                                  </select>
+                               </div>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                   <label>Overall Quality</label>
+                                  <select name="OverallQual" class="form-control"  style="width: 100%;">
+                                      <option selected="selected" value="NA">Select</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
+                                  </select>
+                               </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+                <div class="box-footer">
+                    <div class="col-md-4">
+                        <button id="SalePriceButton" class="btn btn-primary" type="submit"> Calculate Sale Price</button>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Sale Price: </div>
+                                <input type="number" class="form-control" id="SalePrice" name="SalePrice"  disabled>
+                                 <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+
+                            </div>
+                        </div>
+                      </div>
+
+                </div>
+              </form>
+          </div>
+          <!-- general form elements -->
+        </div>
+        <!--/.col (left) -->
+        <!-- right column -->
+          <!-- right column -->
+        <div class="col-md-6">
+          <!-- Horizontal Form -->
+           <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Income Data</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" id="IncomeForm" action="">
+                <fieldset id="IncomeFields" disabled>
+                    <div class="box-body">
+                   <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="PersonalIncome">Personal Monthly Income*</label>
+                           <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <input type="number" class="form-control" id="PersonalIncome" name="PersonalIncome" placeholder="Personal Income" value="{{ data['personal_income'] }}" required>
+                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="PersonalOutcome">Personal Monthly Outcome*</label>
+                             <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <input type="number" class="form-control" name="PersonalOutcome" id="PersonalOutcome" placeholder="Personal Outcome" value="{{ data['personal_outcome'] }}" required>
+                             </div>
+                        </div>
+                      </div>
+                   </div>
+                   <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="SpouceCheckBox" id="SpouceCheckBox"> Spouce
+                    </label>
+                   </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                           <div class="form-group">
+                            <label for="SpouceIncome">Spouce Monthly Income*</label>
+                              <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <input type="text" name="SpouceIncome" id="SpouceIncome" class="form-control input-mini" placeholder="Spouce Income" disabled required>
+                              </div>
+                           </div>
+                      </div>
+                      <div class="col-md-6">
+                         <div class="form-group">
+                          <label for="SpouceOutcome">Spouce Monthly Outcome*</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <input type="text" name="SpouceOutcome" id="SpouceOutcome" class="form-control" placeholder="Spouce Outcome" disabled required>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="OtherIncome">Other Income</label>
+                             <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                 <input type="number" class="form-control" name="OtherIncome" id="OtherIncome" placeholder="Other Income">
+                             </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="LoanPayment">Desired Monthly Payment*</label>
+                             <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <input type="number" class="form-control" name="LoanPayment" id="LoanPayment" placeholder="Desired Loan Payment" value="{{ data['loan_payment'] }}" required>
+                             </div>
+                        </div>
+                      </div>
+                   </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                       <!-- select -->
+                        <div class="form-group">
+                          <label>Select</label>
+                          <select name="BankSelector" class="form-control"  style="width: 100%;">
+                            <option>National Bank of Greece</option>
+                            <option>Piraeus Bank</option>
+                            <option selected="selected">Eurobank</option>
+                            <option>Alpha Bank</option>
+                          </select>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+                </fieldset>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <button id="SubmitButton" class="btn btn-primary" type="submit">Submit</button>
+                  <a href="#result" id="ResLink" class="invisible"></a>
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+          <div class="box box-primary" id="result">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Result</h3>
+                </div>
+                   <div class="box-body">
+                   <div class="row">
+                       <div class="col-md-8">
+                        <div class="form-group">
+                          <label for="LoanType">Loan Type</label>
+                           <input type="text" class="form-control" id="LoanType" name="LoanType"  disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="FinalPayment">Final Monthly Payment</label>
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <input type="number" class="form-control" id="FinalPayment" name="FinalPayment"  disabled>
+                            </div>
+                        </div>
+                      </div>
+                   </div>
+                   </div>
+
+            </div>
+        </div>
+        <!--/.col (right) -->
+        <!--/.col (right) -->
+      </div>
+      <!-- /.row -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+    {% include "footer.html" %}
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 3 -->
+<script src="../static/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="../static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- SlimScroll -->
+<script src="../static/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../static/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../static/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../static/dist/js/demo.js"></script>
+<!--Ajax-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- Select2 -->
+<script src="../static/bower_components/select2/dist/js/select2.full.min.js"></script>
+
+
+<script>
+  $(function () {
+      //Initialize Select2 Elements
+      //$('.select2').select2()
+      var temp = "{{ basement_data['FullBath'] }}"
+      $('select[name="FullBath"]').val("{{ basement_data['FullBath'] }}")
+      $('select[name="TotRmsAbvGrd"]').val("{{ basement_data['TotRmsAbvGrd'] }}")
+      $('select[name="GarageCars"]').val("{{ basement_data['GarageCars'] }}")
+      $('select[name="BsmtFullBath"]').val("{{ basement_data['BsmtFullBath'] }}")
+      $('select[name="BedroomAbvGr"]').val("{{ basement_data['BedroomAbvGr'] }}")
+      $('select[name="HalfBath"]').val("{{ basement_data['HalfBath'] }}")
+      $('select[name="Fireplaces"]').val("{{ basement_data['Fireplaces'] }}")
+      $('select[name="BsmtHalfBath"]').val("{{ basement_data['BsmtHalfBath'] }}")
+      $('select[name="PoolArea"]').val("{{ basement_data['PoolArea'] }}")
+      $('select[name="MoSold"]').val("{{ basement_data['MoSold'] }}")
+      $('select[name="OverallQual"]').val("{{ basement_data['OverallQual'] }}")
+
+  });
+
+
+  $('#SpouceCheckBox').change(function() {
+      $('#SpouceIncome').attr('disabled',!this.checked)
+      $('#SpouceOutcome').attr('disabled',!this.checked)
+    });
+
+
+
+  $('#IncomeForm').submit( function() {
+        var data = JSON.stringify($('form').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {}));
+        //alert(data)
+       event.preventDefault();
+        $.ajax({
+			url: '/index_submited',
+                contentType: 'application/json',
+                dataType : 'json',
+                data: data,
+                type: 'POST',
+                success: function(response){
+			        //alert(response['final_payment'])
+                    //var jsonResponse = JSON.stringify(response);
+                    $('#LoanType').val(response['loan_type']);
+                    $('#FinalPayment').val(response['final_payment']);
+                    $('#ResLink')[0].click();
+                },
+                error: function(error){
+			        alert('error');
+                    alert(error);
+                }
+		});
+
+
+  });
+
+  $('#BasementForm').submit( function() {
+        var data = JSON.stringify($('#BasementForm').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {}));
+        //alert(data)
+       event.preventDefault();
+        $.ajax({
+			url: '/index_sale_price',
+                contentType: 'application/json',
+                dataType : 'json',
+                data: data,
+                type: 'POST',
+                success: function(response){
+			        //alert(response['final_payment'])
+                    //var jsonResponse = JSON.stringify(response);
+                    $('#SalePrice').val(response['sale_price']);
+                    $("#IncomeFields").prop('disabled',false);
+                },
+                error: function(error){
+			        alert('error');
+                    alert(error);
+                }
+		});
+
+
+  });
+</script>
+
+</body>
+</html>
