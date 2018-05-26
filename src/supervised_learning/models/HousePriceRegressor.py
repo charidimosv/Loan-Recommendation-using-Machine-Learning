@@ -3,7 +3,6 @@ from time import time
 
 import numpy as np
 import pandas as pd
-from scipy.special import boxcox1p
 from scipy.stats import skew
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import KFold, cross_val_score
@@ -101,11 +100,12 @@ class HousePriceRegressor(IRegressor):
 
     def print_rmsle_cv(self, model=None, k_folds=5):
         start_time = time()
-        if model is None:
-            model = self.model
+        if model is not None:
+            self.model = model
 
-        rms = self.rmsle_cv(model, k_folds)
-        print("Score ({} {:d}-folds) is {:.4f} ({:.4f}) in {:.4f}s \n".format(model.__class__.__name__, k_folds, rms.mean(), rms.std(), time() - start_time))
+        rms = self.rmsle_cv(self.model, k_folds)
+        print(
+            "Score ({} {:d}-folds) is {:.4f} ({:.4f}) in {:.4f}s \n".format(self.model.__class__.__name__, k_folds, rms.mean(), rms.std(), time() - start_time))
 
     def rmsle_cv(self, model=None, k_folds=5):
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42).get_n_splits()
@@ -122,22 +122,16 @@ class HousePriceRegressor(IRegressor):
 
     @staticmethod
     def engineer_data(data_change, data_check, label_dict=None):
-        # print("The train data size after: {} ".format(data.shape))
         data_change = HousePriceRegressor.drop_useless_columns(data_change)
-        # print("The train data size after: {} ".format(data.shape))
         data_change = HousePriceRegressor.fill_all_na_values(data_change, data_check)
-        # print("The train data size after: {} ".format(data.shape))
         data_change = HousePriceRegressor.transform_numerical_to_categorical(data_change)
-        # print("The train data size after: {} ".format(data.shape))
-        data_change = HousePriceRegressor.create_new_features(data_change)
-        # print("The train data size after: {} ".format(data.shape))
+        data_change = HousePriceRegressor.transform_keeping_ordinal(data_change)
+        data_change = HousePriceRegressor.create_features(data_change)
         data_change = HousePriceRegressor.process_skewed_features(data_change)
-        # print("The train data size after: {} ".format(data.shape))
         if label_dict is None:
             label_dict = HousePriceRegressor.create_label_dict(data_change)
         data_change = HousePriceRegressor.label_transform_data(data_change, label_dict)
         # data = pd.get_dummies(data)
-        # print("The train data size after: {} ".format(data.shape))
 
         return data_change, label_dict
 
@@ -216,8 +210,137 @@ class HousePriceRegressor(IRegressor):
         return data_change
 
     @staticmethod
-    def create_new_features(data):
+    def create_features(data):
+        data = HousePriceRegressor.create_grouped_features(data)
+        data = HousePriceRegressor.create_combined_features(data)
+        data = HousePriceRegressor.create_polynomial_features(data)
+        return data
+
+    @staticmethod
+    def create_grouped_features(data):
+        data["SimplOverallQual"] = data.OverallQual.replace({1: 1, 2: 1, 3: 1,  # bad
+                                                             4: 2, 5: 2, 6: 2,  # average
+                                                             7: 3, 8: 3, 9: 3, 10: 3  # good
+                                                             })
+        data["SimplOverallCond"] = data.OverallCond.replace({1: 1, 2: 1, 3: 1,  # bad
+                                                             4: 2, 5: 2, 6: 2,  # average
+                                                             7: 3, 8: 3, 9: 3, 10: 3  # good
+                                                             })
+        data["SimplPoolQC"] = data.PoolQC.replace({1: 1, 2: 1,  # average
+                                                   3: 2, 4: 2  # good
+                                                   })
+        data["SimplGarageCond"] = data.GarageCond.replace({1: 1,  # bad
+                                                           2: 1, 3: 1,  # average
+                                                           4: 2, 5: 2  # good
+                                                           })
+        data["SimplGarageQual"] = data.GarageQual.replace({1: 1,  # bad
+                                                           2: 1, 3: 1,  # average
+                                                           4: 2, 5: 2  # good
+                                                           })
+        data["SimplFireplaceQu"] = data.FireplaceQu.replace({1: 1,  # bad
+                                                             2: 1, 3: 1,  # average
+                                                             4: 2, 5: 2  # good
+                                                             })
+        data["SimplFireplaceQu"] = data.FireplaceQu.replace({1: 1,  # bad
+                                                             2: 1, 3: 1,  # average
+                                                             4: 2, 5: 2  # good
+                                                             })
+        data["SimplFunctional"] = data.Functional.replace({1: 1, 2: 1,  # bad
+                                                           3: 2, 4: 2,  # major
+                                                           5: 3, 6: 3, 7: 3,  # minor
+                                                           8: 4  # typical
+                                                           })
+        data["SimplKitchenQual"] = data.KitchenQual.replace({1: 1,  # bad
+                                                             2: 1, 3: 1,  # average
+                                                             4: 2, 5: 2  # good
+                                                             })
+        data["SimplHeatingQC"] = data.HeatingQC.replace({1: 1,  # bad
+                                                         2: 1, 3: 1,  # average
+                                                         4: 2, 5: 2  # good
+                                                         })
+        data["SimplBsmtFinType1"] = data.BsmtFinType1.replace({1: 1,  # unfinished
+                                                               2: 1, 3: 1,  # rec room
+                                                               4: 2, 5: 2, 6: 2  # living quarters
+                                                               })
+        data["SimplBsmtFinType2"] = data.BsmtFinType2.replace({1: 1,  # unfinished
+                                                               2: 1, 3: 1,  # rec room
+                                                               4: 2, 5: 2, 6: 2  # living quarters
+                                                               })
+        data["SimplBsmtCond"] = data.BsmtCond.replace({1: 1,  # bad
+                                                       2: 1, 3: 1,  # average
+                                                       4: 2, 5: 2  # good
+                                                       })
+        data["SimplBsmtQual"] = data.BsmtQual.replace({1: 1,  # bad
+                                                       2: 1, 3: 1,  # average
+                                                       4: 2, 5: 2  # good
+                                                       })
+        data["SimplExterCond"] = data.ExterCond.replace({1: 1,  # bad
+                                                         2: 1, 3: 1,  # average
+                                                         4: 2, 5: 2  # good
+                                                         })
+        data["SimplExterQual"] = data.ExterQual.replace({1: 1,  # bad
+                                                         2: 1, 3: 1,  # average
+                                                         4: 2, 5: 2  # good
+                                                         })
+        return data
+
+    @staticmethod
+    def create_combined_features(data):
         data["TotalSF"] = data["TotalBsmtSF"] + data["1stFlrSF"] + data["2ndFlrSF"]
+        # Overall quality of the house
+        data["OverallGrade"] = data["OverallQual"] * data["OverallCond"]
+        # Overall quality of the garage
+        data["GarageGrade"] = data["GarageQual"] * data["GarageCond"]
+        # Overall quality of the exterior
+        data["ExterGrade"] = data["ExterQual"] * data["ExterCond"]
+        # Overall kitchen score
+        data["KitchenScore"] = data["KitchenAbvGr"] * data["KitchenQual"]
+        # Overall fireplace score
+        data["FireplaceScore"] = data["Fireplaces"] * data["FireplaceQu"]
+        # Overall garage score
+        data["GarageScore"] = data["GarageArea"] * data["GarageQual"]
+        # Overall pool score
+        data["PoolScore"] = data["PoolArea"] * data["PoolQC"]
+        # Simplified overall quality of the house
+        data["SimplOverallGrade"] = data["SimplOverallQual"] * data["SimplOverallCond"]
+        # Simplified overall quality of the exterior
+        data["SimplExterGrade"] = data["SimplExterQual"] * data["SimplExterCond"]
+        # Simplified overall pool score
+        data["SimplPoolScore"] = data["PoolArea"] * data["SimplPoolQC"]
+        # Simplified overall garage score
+        data["SimplGarageScore"] = data["GarageArea"] * data["SimplGarageQual"]
+        # Simplified overall fireplace score
+        data["SimplFireplaceScore"] = data["Fireplaces"] * data["SimplFireplaceQu"]
+        # Simplified overall kitchen score
+        data["SimplKitchenScore"] = data["KitchenAbvGr"] * data["SimplKitchenQual"]
+        # Total number of bathrooms
+        data["TotalBath"] = data["BsmtFullBath"] + (0.5 * data["BsmtHalfBath"]) + data["FullBath"] + (0.5 * data["HalfBath"])
+        # Total SF for house (incl. basement)
+        data["AllSF"] = data["GrLivArea"] + data["TotalBsmtSF"]
+        # Total SF for 1st + 2nd floors
+        data["AllFlrsSF"] = data["1stFlrSF"] + data["2ndFlrSF"]
+        # Total SF for porch
+        data["AllPorchSF"] = data["OpenPorchSF"] + data["EnclosedPorch"] + data["3SsnPorch"] + data["ScreenPorch"]
+        # Has masonry veneer or not
+        data["HasMasVnr"] = data.MasVnrType.replace({"BrkCmn": 1, "BrkFace": 1, "CBlock": 1,
+                                                     "Stone": 1, "None": 0})
+        # House completed before sale or not
+        data["BoughtOffPlan"] = data.SaleCondition.replace({"Abnorml": 0, "Alloca": 0, "AdjLand": 0,
+                                                            "Family": 0, "Normal": 0, "Partial": 1})
+
+        return data
+
+    @staticmethod
+    def create_polynomial_features(data):
+        cols_to_poly = (
+            "OverallQual", "AllSF", 'AllFlrsSF', "GrLivArea", 'SimplOverallQual', 'ExterQual', "GarageCars", "TotalBath", "KitchenQual", "GarageScore")
+
+        for col in cols_to_poly:
+            if col in data.columns:
+                data[col + "-s2"] = data[col] ** 2
+                data[col + "-s3"] = data[col] ** 3
+                data[col + "-Sq"] = np.sqrt(data[col])
+
         return data
 
     @staticmethod
@@ -229,21 +352,38 @@ class HousePriceRegressor(IRegressor):
         return data
 
     @staticmethod
+    def transform_keeping_ordinal(data):
+        data = data.replace({"Alley": {"None": 0, "Grvl": 1, "Pave": 2},
+                             "BsmtCond": {"None": 0, "Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "BsmtExposure": {"None": 0, "Mn": 1, "Av": 2, "Gd": 3},
+                             "BsmtFinType1": {"None": 0, "Unf": 1, "LwQ": 2, "Rec": 3, "BLQ": 4, "ALQ": 5, "GLQ": 6},
+                             "BsmtFinType2": {"None": 0, "Unf": 1, "LwQ": 2, "Rec": 3, "BLQ": 4, "ALQ": 5, "GLQ": 6},
+                             "BsmtQual": {"None": 0, "Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "ExterCond": {"Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "ExterQual": {"Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "FireplaceQu": {"None": 0, "Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "Functional": {"Sal": 1, "Sev": 2, "Maj2": 3, "Maj1": 4, "Mod": 5, "Min2": 6, "Min1": 7, "Typ": 8},
+                             "GarageCond": {"None": 0, "Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "GarageQual": {"None": 0, "Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "HeatingQC": {"Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "KitchenQual": {"Po": 1, "Fa": 2, "TA": 3, "Gd": 4, "Ex": 5},
+                             "LandSlope": {"Sev": 1, "Mod": 2, "Gtl": 3},
+                             "LotShape": {"IR3": 1, "IR2": 2, "IR1": 3, "Reg": 4},
+                             "PavedDrive": {"N": 0, "P": 1, "Y": 2},
+                             "PoolQC": {"None": 0, "Fa": 1, "TA": 2, "Gd": 3, "Ex": 4},
+                             "Street": {"Grvl": 1, "Pave": 2},
+                             "Utilities": {"ELO": 1, "NoSeWa": 2, "NoSewr": 3, "AllPub": 4}}
+                            )
+
+        return data
+
+    @staticmethod
     def process_skewed_features(data):
-        numeric_feats = data.dtypes[data.dtypes != "object"].index
-
-        # Check the skew of all numerical features
-        skewed_feats = data[numeric_feats].apply(lambda x: skew(x.dropna())).sort_values(ascending=False)
-        # print("\nSkew in numerical features: \n")
-        skewness = pd.DataFrame({"Skew": skewed_feats})
-        # print(skewness.head(10))
-        skewness = skewness[abs(skewness) > 0.75]
-        # print("There are {} skewed numerical features to Box Cox transform".format(skewness.shape[0]))
-
+        numerical_features = data.dtypes[data.dtypes != "object"].index
+        skewness = data[numerical_features].apply(lambda x: skew(x))
+        skewness = skewness[abs(skewness) > 0.5]
         skewed_features = skewness.index
-        lam = 0.15
-        for feat in skewed_features:
-            data[feat] = boxcox1p(data[feat], lam)
+        data[skewed_features] = np.log1p(data[skewed_features])
         return data
 
     @staticmethod

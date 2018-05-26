@@ -39,5 +39,5 @@ class ISupervisedLearner:
         pass
 
     @staticmethod
-    def create_new_features(data):
+    def create_features(data):
         pass
