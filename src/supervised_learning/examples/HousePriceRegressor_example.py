@@ -61,4 +61,4 @@ if __name__ == "__main__":
     # house_regr.prepare_test_data(df_test)
 
     # test_pred = house_regr.predict()
-    # test_pred = house_regr.predict(df_test)
+    test_pred = house_regr.predict(df_test)

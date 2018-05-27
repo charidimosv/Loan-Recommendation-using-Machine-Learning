@@ -64,6 +64,7 @@ class HousePriceRegressor(IRegressor):
         self.test_ID = df_test["Id"]
 
         all_data = pd.concat((self.df_train_clean, df_test)).reset_index(drop=True)
+        df_test = all_data[self.df_train_clean.shape[0]:]
         df_test, _ = HousePriceRegressor.engineer_data(df_test, all_data, self.label_dict)
 
         self.X_test = df_test.values
