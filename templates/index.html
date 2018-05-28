@@ -13,13 +13,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        General Form Elements
-        <small>Preview</small>
+        Loan Recommendation
+        <small>Loan Recommendation Based on Real Estate Preferences</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Forms</a></li>
-        <li class="active">General Elements</li>
       </ol>
     </section>
 
@@ -38,59 +36,97 @@
                       <div class="col-md-12">
                           <div class="form-group label-default"><label>Basement' s Areas (in square feet)</label></div>
                           <div class="hidden"><input type="text" id="Id" name="Id" value="0"></div>
+                          <div class="hidden"><input type="text" id="Neighborhood" name="Neighborhood" value="{{ basement_data['Neighborhood'] }}"></div>
+                          <div class="hidden"><input type="text" id="MSSubClass" name="MSSubClass" value="{{ basement_data['MSSubClass'] }}"></div>
                           <div class="col-md-4">
                             <!-- select -->
                             <div class="form-group">
-                              <label for="TotalBsmtSF">Total Basement Area</label>
-                              <input type="text" class="form-control" id="TotalBsmtSF" name="TotalBsmtSF" placeholder="Total Basement Area"  value="{{ basement_data['TotalBsmtSF'] }}">
+                              <label for="TotalBsmtSF">Total Basement Area</label>\
+                              <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="TotalBsmtSF" name="TotalBsmtSF" placeholder="Total Basement Area"  value="{{ basement_data['TotalBsmtSF'] }}">
+                              </div>
+                              </div>
+                            <div class="form-group">
+                                <label for="1stFlrSF">First Floor Area</label>
+                               <div class="input-group">
+                                   <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="1stFlrSF" name="1stFlrSF" placeholder="First Floor Area" value="{{ basement_data['1stFlrSF'] }}">
+                               </div>
                             </div>
                             <div class="form-group">
-                              <label for="1stFlrSF">First Floor Area</label>
-                              <input type="text" class="form-control" id="1stFlrSF" name="1stFlrSF" placeholder="First Floor Area" value="{{ basement_data['1stFlrSF'] }}">
+                                <label for="OpenPorchSF">Open Porch Area</label>
+                                <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="OpenPorchSF" name="OpenPorchSF" placeholder="Open Porch Area" value="{{ basement_data['OpenPorchSF'] }}">
+                                </div>
                             </div>
                             <div class="form-group">
-                              <label for="OpenPorchSF">Open Porch Area</label>
-                              <input type="text" class="form-control" id="OpenPorchSF" name="OpenPorchSF" placeholder="Open Porch Area" value="{{ basement_data['OpenPorchSF'] }}">
-                            </div>
-                            <div class="form-group">
-                              <label for="BsmtFinSF1">Finished Area</label>
-                              <input type="text" class="form-control" id="BsmtFinSF1" name="BsmtFinSF1" placeholder="Finished Area" value="{{ basement_data['BsmtFinSF1'] }}">
+                                <label for="BsmtFinSF1">Finished Area</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">sf</div>
+                                    <input type="text" class="form-control" id="BsmtFinSF1" name="BsmtFinSF1" placeholder="Finished Area" value="{{ basement_data['BsmtFinSF1'] }}">
+                                </div>
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
                                 <label for="GrLivArea">Above Grade Area</label>
-                                <input type="text" class="form-control" id="GrLivArea" name="GrLivArea" placeholder="Above Grade Area" value="{{ basement_data['GrLivArea'] }}">
+                                <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="GrLivArea" name="GrLivArea" placeholder="Above Grade Area" value="{{ basement_data['GrLivArea'] }}">
+                                </div>
                             </div>
                             <div class="form-group">
                               <label for="2ndFlrSF">Second Floor Area</label>
-                              <input type="text" class="form-control" id="2ndFlrSF" name="2ndFlrSF" placeholder="Second Floor Area" value="{{ basement_data['2ndFlrSF'] }}">
+                              <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="2ndFlrSF" name="2ndFlrSF" placeholder="Second Floor Area" value="{{ basement_data['2ndFlrSF'] }}">
+                               </div>
                             </div>
                             <div class="form-group">
                               <label for="ScreenPorch">Screen Porch Area</label>
-                              <input type="text" class="form-control" id="ScreenPorch" name="ScreenPorch" placeholder="Screen Porch Area" value="{{ basement_data['ScreenPorch'] }}">
+                              <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="ScreenPorch" name="ScreenPorch" placeholder="Screen Porch Area" value="{{ basement_data['ScreenPorch'] }}">
+                               </div>
                             </div>
                             <div class="form-group">
                               <label for="BsmtUnfSF">Finished Area</label>
-                              <input type="text" class="form-control" id="BsmtUnfSF" name="BsmtUnfSF" placeholder="Unfinished Area" value="{{ basement_data['BsmtUnfSF'] }}">
+                              <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="BsmtUnfSF" name="BsmtUnfSF" placeholder="Unfinished Area" value="{{ basement_data['BsmtUnfSF'] }}">
+                              </div>
                             </div>
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
-                                <label for="GarageYrBlt">Lot Area</label>
-                                <input type="text" class="form-control" id="LotArea" name="LotArea" placeholder="Lot Area" value="{{ basement_data['LotArea'] }}">
+                                <label for="LotArea">Lot Area</label>
+                                <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="LotArea" name="LotArea" placeholder="Lot Area" value="{{ basement_data['LotArea'] }}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="WoodDeckSF">Wood Decks Area</label>
-                                <input type="text" class="form-control" id="WoodDeckSF" name="WoodDeckSF" placeholder="Wood Decks Area" value="{{ basement_data['WoodDeckSF'] }}">
+                                <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="WoodDeckSF" name="WoodDeckSF" placeholder="Wood Decks Area" value="{{ basement_data['WoodDeckSF'] }}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="MasVnrArea">Three Season Porch Area</label>
-                                <input type="text" class="form-control" id="3SsnPorch" name="3SsnPorch" placeholder="Three Season Porch Area" value="{{ basement_data['3SsnPorch'] }}">
+                                <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="3SsnPorch" name="3SsnPorch" placeholder="Three Season Porch Area" value="{{ basement_data['3SsnPorch'] }}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="MasVnrArea">Masonry Veneer Area</label>
-                                <input type="text" class="form-control" id="MasVnrArea" name="MasVnrArea" placeholder="Masonry Veneer Area" value="{{ basement_data['MasVnrArea'] }}">
+                                <div class="input-group">
+                                  <div class="input-group-addon">sf</div>
+                                  <input type="text" class="form-control" id="MasVnrArea" name="MasVnrArea" placeholder="Masonry Veneer Area" value="{{ basement_data['MasVnrArea'] }}">
+                                </div>
                             </div>
                           </div>
                       </div>
@@ -170,8 +206,11 @@
                         </div>
                                <div class="form-group">
                                 <label for="GarageArea">Size of Garage</label>
-                                <input type="text" class="form-control" id="GarageArea" name="GarageArea" placeholder="Size of Garage" value="{{ basement_data['GarageArea'] }}">
-                            </div>
+                                <div class="input-group">
+                                    <div class="input-group-addon">sf</div>
+                                    <input type="text" class="form-control" id="GarageArea" name="GarageArea" placeholder="Size of Garage" value="{{ basement_data['GarageArea'] }}">
+                                </div>
+                               </div>
                            </div>
                            <div class="col-md-3">
                                 <!-- select -->
@@ -198,8 +237,11 @@
                             </div>
                                 <div class="form-group">
                                     <label for="GarageYrBlt">Year Garage was Built</label>
-                                    <input type="text" class="form-control" id="GarageYrBlt" name="GarageYrBlt" placeholder="Year garage was built" value="{{ basement_data['GarageYrBlt'] }}">
-                            </div>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        <input type="text" class="form-control" id="GarageYrBlt" name="GarageYrBlt" placeholder="Year garage was built" value="{{ basement_data['GarageYrBlt'] }}">
+                                    </div>
+                                </div>
                             </div>
                            <div class="col-md-3">
                                <div class="form-group">
@@ -213,21 +255,28 @@
                             </div>
                                <div class="form-group">
                           <label>Pool Area</label>
-                          <select name="PoolArea" class="form-control"  style="width: 100%;">
-                            <option selected="selected" value="NA">Select</option>
-                            <option>0</option>
-                            <option>480</option>
-                            <option>512</option>
-                            <option>519</option>
-                            <option>555</option>
-                            <option>576</option>
-                            <option>648</option>
-                            <option>738</option>
-                          </select>
+                           <div class="input-group">
+                              <div class="input-group-addon">sf</div>
+                               <input type="text" class="form-control" id="PoolArea" name="PoolArea" placeholder="Pool Area" value="{{ basement_data['PoolArea'] }}">
+                            <!--  <select name="PoolArea" class="form-control"  style="width: 100%;">
+                                <option selected="selected" value="NA">Select</option>
+                                <option>0</option>
+                                <option>480</option>
+                                <option>512</option>
+                                <option>519</option>
+                                <option>555</option>
+                                <option>576</option>
+                                <option>648</option>
+                                <option>738</option>
+                              </select> -->
+                           </div>
                         </div>
                                <div class="form-group">
                                     <label for="LotFrontage">Street Connected</label>
-                                    <input type="text" class="form-control" id="LotFrontage" name="LotFrontage" placeholder="In linear feet" value="{{ basement_data['LotFrontage'] }}">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">lf</div>
+                                        <input type="text" class="form-control" id="LotFrontage" name="LotFrontage" placeholder="In linear feet" value="{{ basement_data['LotFrontage'] }}">
+                                    </div>
                                </div>
                       </div>
                       </div>
@@ -238,13 +287,51 @@
                           <div class="col-md-3">
                                <div class="form-group">
                                     <label for="YearBuilt">Year Built</label>
-                                    <input type="text" class="form-control" id="YearBuilt" name="YearBuilt" placeholder="e.g. 2003" value="{{ basement_data['YearBuilt'] }}">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        <input type="text" class="form-control" id="YearBuilt" name="YearBuilt" placeholder="e.g. 2003" value="{{ basement_data['YearBuilt'] }}">
+                                    </div>
+                               </div>
+                               <div class="form-group">
+                                   <label>Overall Qual.</label>
+                                  <select name="OverallQual" class="form-control"  style="width: 100%;">
+                                      <option selected="selected" value="NA">Select</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
+                                  </select>
                                </div>
                           </div>
                           <div class="col-md-3">
                               <div class="form-group">
                                     <label for="YearRemodAdd">Remodel Date</label>
-                                    <input type="text" class="form-control" id="YearRemodAdd" name="YearRemodAdd" placeholder="e.g. 2003" value="{{ basement_data['YearRemodAdd'] }}">
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                        <input type="text" class="form-control" id="YearRemodAdd" name="YearRemodAdd" placeholder="e.g. 2003" value="{{ basement_data['YearRemodAdd'] }}">
+                                    </div>
+                              </div>
+                            <div class="form-group">
+                                   <label>Overall Cond.</label>
+                                  <select name="OverallCond" class="form-control"  style="width: 100%;">
+                                      <option selected="selected" value="NA">Select</option>
+                                      <option value="1">1</option>
+                                      <option value="2">2</option>
+                                      <option value="3">3</option>
+                                      <option value="4">4</option>
+                                      <option value="5">5</option>
+                                      <option value="6">6</option>
+                                      <option value="7">7</option>
+                                      <option value="8">8</option>
+                                      <option value="9">9</option>
+                                      <option value="10">10</option>
+                                  </select>
                                </div>
                           </div>
                           <div class="col-md-3">
@@ -264,24 +351,6 @@
                                       <option value="10">October</option>
                                       <option value="11">November</option>
                                       <option value="12">December</option>
-                                  </select>
-                               </div>
-                          </div>
-                          <div class="col-md-3">
-                              <div class="form-group">
-                                   <label>Overall Quality</label>
-                                  <select name="OverallQual" class="form-control"  style="width: 100%;">
-                                      <option selected="selected" value="NA">Select</option>
-                                      <option value="1">1</option>
-                                      <option value="2">2</option>
-                                      <option value="3">3</option>
-                                      <option value="4">4</option>
-                                      <option value="5">5</option>
-                                      <option value="6">6</option>
-                                      <option value="7">7</option>
-                                      <option value="8">8</option>
-                                      <option value="9">9</option>
-                                      <option value="10">10</option>
                                   </select>
                                </div>
                           </div>
@@ -391,7 +460,7 @@
                       <div class="col-md-6">
                        <!-- select -->
                         <div class="form-group">
-                          <label>Select</label>
+                          <label>Select Bank</label>
                           <select name="BankSelector" class="form-control"  style="width: 100%;">
                             <option>National Bank of Greece</option>
                             <option>Piraeus Bank</option>
@@ -400,12 +469,22 @@
                           </select>
                         </div>
                       </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="LoanPayment">Desired Duration*</label>
+                             <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input type="number" class="form-control" name="LoanDuration" id="LoanDuration" placeholder="Desired Loan Duration" value="{{ data['loan_duration'] }}" required>
+                                <div class="input-group-addon">Years</div>
+                             </div>
+                        </div>
+                      </div>
                   </div>
               </div>
                 </fieldset>
               <!-- /.box-body -->
               <div class="box-footer">
-                <button id="SubmitButton" class="btn btn-primary" type="submit">Submit</button>
+                <button id="SubmitButton" class="btn btn-primary" type="submit" disabled>Loan Recomendation</button>
                   <a href="#result" id="ResLink" class="invisible"></a>
               </div>
             </form>
@@ -483,9 +562,10 @@
       $('select[name="HalfBath"]').val("{{ basement_data['HalfBath'] }}")
       $('select[name="Fireplaces"]').val("{{ basement_data['Fireplaces'] }}")
       $('select[name="BsmtHalfBath"]').val("{{ basement_data['BsmtHalfBath'] }}")
-      $('select[name="PoolArea"]').val("{{ basement_data['PoolArea'] }}")
+      //$('select[name="PoolArea"]').val("{{ basement_data['PoolArea'] }}")
       $('select[name="MoSold"]').val("{{ basement_data['MoSold'] }}")
       $('select[name="OverallQual"]').val("{{ basement_data['OverallQual'] }}")
+      $('select[name="OverallCond"]').val("{{ basement_data['OverallCond'] }}")
 
   });
 
@@ -498,7 +578,7 @@
 
 
   $('#IncomeForm').submit( function() {
-        var data = JSON.stringify($('form').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {}));
+        var data = JSON.stringify($('#IncomeForm').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {}));
         //alert(data)
        event.preventDefault();
         $.ajax({
@@ -516,7 +596,6 @@
                 },
                 error: function(error){
 			        alert('error');
-                    alert(error);
                 }
 		});
 
@@ -538,10 +617,11 @@
                     //var jsonResponse = JSON.stringify(response);
                     $('#SalePrice').val(response['sale_price']);
                     $("#IncomeFields").prop('disabled',false);
+                    $("#SubmitButton").prop('disabled',false);
+
                 },
                 error: function(error){
 			        alert('error');
-                    alert(error);
                 }
 		});
 

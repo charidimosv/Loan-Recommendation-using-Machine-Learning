@@ -19,39 +19,50 @@ def index():
 
 @app.route('/index_submited', methods=['POST'])
 def index_submited():
-    print(request.is_json)
     content = request.get_json()
     print(content)
-    print(content['PersonalIncome'])
-    result = float(content['PersonalIncome']) - float(content['PersonalOutcome'])
-    df = pd.io.json.json_normalize(content)
-    print(df)
-    return pd.io.json.dumps({'final_payment': result, 'loan_type': 'Euribor 3M Σταθερό'})
+    available_income = float(content['PersonalIncome']) - float(content['PersonalOutcome'])
+    final_payment = float(content['LoanPayment'])
+    loan_duration = float(content['LoanDuration'])
+
+    if 'SpouceCheckBox' in content:
+        available_income = available_income + float(content['SpouceIncome']) - float(content['SpouceOutcome'])
+
+    if content['OtherIncome']:
+        available_income = available_income + float(content['OtherIncome'])
+
+    if available_income > final_payment:
+        final_payment = (final_payment + available_income) / 2.0
+
+    return pd.io.json.dumps({'final_payment': final_payment, 'loan_type': 'Euribor 3M Σταθερό'})
 
 
 @app.route('/index_sale_price', methods=['POST'])
 def index_sale_price():
-    print(request.is_json)
     content = request.get_json()
     print(content)
     df = pd.io.json.json_normalize(content)
-    print(df)
-    #house_regr.predict(_df_test=df)
-    return pd.io.json.dumps({'sale_price': '1000'})
+    columns = list(df)
+    columns.remove('Neighborhood')
+    df[columns] = df[columns].apply(pd.to_numeric)
+    #print(df)
+
+    sale_price = house_regr.predict(_df_test=df)
+    return pd.io.json.dumps({'sale_price': sale_price})
 
 
 if __name__ == '__main__':
     data = {}
-    data['personal_income'] = 100
-    data['personal_outcome'] = 50
-    data['loan_payment'] = 30
+    data['personal_income'] = 2000
+    data['personal_outcome'] = 1000
+    data['loan_payment'] = 500
+    data['loan_duration'] = 5
 
     df_train = pd.read_csv(TRAIN_PATH)
-    temp = df_train.head(1)
-    json_data = df_train.head(1).to_json(orient='records')
-    basement_data = pd.json.loads(json_data)
-    basement_data = basement_data[0]
-
+    basement_data = pd.json.loads(df_train.head(1).to_json(orient='records'))[0]
+    basement_data['GarageYrBlt'] = int(basement_data['GarageYrBlt'])
     r_forest = RandomForestRegressor(n_estimators=300, random_state=0)
-    house_regr = HousePriceRegressor( _df_train=df_train, _model=r_forest)
+    house_regr = HousePriceRegressor(_df_train=df_train, _model=r_forest)
+    sale_price = 0
+
     app.run()
