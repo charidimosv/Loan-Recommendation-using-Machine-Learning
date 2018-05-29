@@ -106,7 +106,7 @@ class HousePriceRegressor(IRegressor):
 
         rms = self.rmsle_cv(self.model, k_folds)
         print(
-            "Score ({} {:d}-folds) is {:.4f} ({:.4f}) in {:.4f}s \n".format(self.model.__class__.__name__, k_folds, rms.mean(), rms.std(), time() - start_time))
+            "Score ({} {:d}-folds) is {:.6f} ({:.6f}) in {:.6f} sec \n".format(self.model.__class__.__name__, k_folds, rms.mean(), rms.std(), time() - start_time))
 
     def rmsle_cv(self, model=None, k_folds=5):
         kf = KFold(n_splits=k_folds, shuffle=True, random_state=42).get_n_splits()
@@ -128,7 +128,7 @@ class HousePriceRegressor(IRegressor):
         data_change = HousePriceRegressor.transform_numerical_to_categorical(data_change)
         data_change = HousePriceRegressor.transform_keeping_ordinal(data_change)
         data_change = HousePriceRegressor.create_features(data_change)
-        data_change = HousePriceRegressor.process_skewed_features(data_change)
+        # data_change = HousePriceRegressor.process_skewed_features(data_change)
         if label_dict is None:
             label_dict = HousePriceRegressor.create_label_dict(data_change)
         data_change = HousePriceRegressor.label_transform_data(data_change, label_dict)

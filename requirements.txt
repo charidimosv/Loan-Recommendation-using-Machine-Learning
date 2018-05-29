@@ -9,3 +9,5 @@ image
 sklearn
 pandas
 seaborn
+Flask
+request

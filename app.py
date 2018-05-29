@@ -1,21 +1,31 @@
-import pandas as pd
-import ast
-from flask import Flask, render_template, request
-from sklearn.ensemble import RandomForestRegressor
+import warnings
 
-from src.supervised_learning.models.HousePriceRegressor import HousePriceRegressor, TRAIN_PATH
+import pandas as pd
+from flask import Flask, render_template, request
+from sklearn.linear_model import Lasso
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import RobustScaler
+
+from src.supervised_learning.models.HousePriceRegressor import HousePriceRegressor
+from src.utils.conf import *
 
 app = Flask(__name__)
+
+
+def ignore_warn(*args, **kwargs):
+    pass
 
 
 @app.route('/')
 def login():
     return render_template('login.html')
 
-@app.route('/index', methods=['POST','GET'])
+
+@app.route('/index', methods=['POST', 'GET'])
 def index():
     # your code
-      return render_template('index.html', basement_data=basement_data, data=data)
+    return render_template('index.html', basement_data=basement_data, data=data)
+
 
 @app.route('/index_submited', methods=['POST'])
 def index_submited():
@@ -45,13 +55,23 @@ def index_sale_price():
     columns = list(df)
     columns.remove('Neighborhood')
     df[columns] = df[columns].apply(pd.to_numeric)
-    #print(df)
+    print(df)
 
-    sale_price = house_regr.predict(_df_test=df)
+    df_random_test = df_test.head(1)
+    for col in df_random_test.columns:
+        if col in df.columns:
+            df_random_test[col] = df[col]
+
+    sale_price = house_regr.predict(_df_test=df_random_test)
+    print(sale_price)
+
     return pd.io.json.dumps({'sale_price': sale_price})
 
 
 if __name__ == '__main__':
+    warnings.filterwarnings("ignore")
+    warnings.warn = ignore_warn
+
     data = {}
     data['personal_income'] = 2000
     data['personal_outcome'] = 1000
@@ -59,10 +79,15 @@ if __name__ == '__main__':
     data['loan_duration'] = 5
 
     df_train = pd.read_csv(TRAIN_PATH)
+    df_test = pd.read_csv(TEST_PATH)
+
     basement_data = pd.json.loads(df_train.head(1).to_json(orient='records'))[0]
     basement_data['GarageYrBlt'] = int(basement_data['GarageYrBlt'])
-    r_forest = RandomForestRegressor(n_estimators=300, random_state=0)
-    house_regr = HousePriceRegressor(_df_train=df_train, _model=r_forest)
+
+    house_regr = HousePriceRegressor(df_train, df_test)
+    lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.0006, random_state=1, max_iter=50000))
+    house_regr.fit(_model=lasso)
+
     sale_price = 0
 
     app.run()

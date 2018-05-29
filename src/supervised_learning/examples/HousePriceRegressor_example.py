@@ -1,7 +1,7 @@
 import warnings
 
 import pandas as pd
-from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.kernel_ridge import KernelRidge
 from sklearn.linear_model import ElasticNet, Lasso
 from sklearn.pipeline import make_pipeline
@@ -26,17 +26,35 @@ if __name__ == "__main__":
 
     house_regr = HousePriceRegressor(df_train, df_test)
 
-    r_forest = RandomForestRegressor(n_estimators=300, random_state=0)
-    house_regr.print_rmsle_cv(r_forest)
+    # linear = LinearRegression()
+    # house_regr.print_rmsle_cv(linear)
 
-    lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.00042, random_state=1, max_iter=50000))
-    elasticNet = make_pipeline(RobustScaler(), ElasticNet(alpha=0.0006, l1_ratio=.735, random_state=3, max_iter=50000))
-    house_regr.print_rmsle_cv(lasso)
-    house_regr.print_rmsle_cv(elasticNet)
+    # r_forest = RandomForestRegressor(n_estimators=300, random_state=0)
+    # house_regr.print_rmsle_cv(r_forest)
+
+    # lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.00042, random_state=1, max_iter=50000))
+    # house_regr.print_rmsle_cv(lasso)
+    # elasticNet = make_pipeline(RobustScaler(), ElasticNet(alpha=0.0006, l1_ratio=.735, random_state=3, max_iter=50000))
+    # house_regr.print_rmsle_cv(elasticNet)
 
     lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.0006, random_state=1, max_iter=50000))
+    # lasso = Lasso(alpha=0.00042, random_state=1, max_iter=50000)
+    # house_regr.print_rmsle_cv(lasso)
+    house_regr.fit(_model=lasso)
+
+    temp = df_test.head(1)
+    allDATA = pd.concat((df_test, temp)).reset_index(drop=True)
+    temp = allDATA[df_test.shape[0]:]
+
+    print(house_regr.predict(_df_test=allDATA)[df_test.shape[0]:])
+    # print(house_regr.predict(_df_test=allDATA))
+    # print(house_regr.predict(_df_test=allDATA))
+
+
+
+
     elasticNet = make_pipeline(RobustScaler(), ElasticNet(alpha=0.0006, l1_ratio=1, random_state=3, max_iter=50000))
-    house_regr.print_rmsle_cv(lasso)
+    elasticNet = ElasticNet(alpha=0.0006, l1_ratio=1, random_state=3, max_iter=50000)
     house_regr.print_rmsle_cv(elasticNet)
 
     averaged_models = AveragingModels(models=(elasticNet, lasso))
