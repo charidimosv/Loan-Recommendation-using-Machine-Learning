@@ -41,6 +41,14 @@ def index_submited():
     if content['OtherIncome']:
         available_income = available_income + float(content['OtherIncome'])
 
+    sale_pricee = 1000 #edo vale olo to daneio
+    sale_pricee = sale_pricee * 0.8
+
+    years = int(sale_pricee / (available_income * 12) + 1)
+    months = years * 12
+
+    final_payment = sale_price / months
+
     if available_income > final_payment:
         final_payment = (final_payment + available_income) / 2.0
 
