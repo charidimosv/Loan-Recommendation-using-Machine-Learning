@@ -36,35 +36,33 @@
                       <div class="col-md-12">
                           <div class="form-group label-default"><label>Basement' s Areas (in square feet)</label></div>
                           <div class="hidden"><input type="text" id="Id" name="Id" value="0"></div>
-                          <div class="hidden"><input type="text" id="Neighborhood" name="Neighborhood" value="{{ basement_data['Neighborhood'] }}"></div>
-                          <div class="hidden"><input type="text" id="MSSubClass" name="MSSubClass" value="{{ basement_data['MSSubClass'] }}"></div>
                           <div class="col-md-4">
                             <!-- select -->
                             <div class="form-group">
                               <label for="TotalBsmtSF">Total Basement Area</label>\
                               <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="TotalBsmtSF" name="TotalBsmtSF" placeholder="Total Basement Area"  value="{{ basement_data['TotalBsmtSF'] }}">
                               </div>
                               </div>
                             <div class="form-group">
                                 <label for="1stFlrSF">First Floor Area</label>
                                <div class="input-group">
-                                   <div class="input-group-addon">sf</div>
+                                   <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="1stFlrSF" name="1stFlrSF" placeholder="First Floor Area" value="{{ basement_data['1stFlrSF'] }}">
                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="OpenPorchSF">Open Porch Area</label>
                                 <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="OpenPorchSF" name="OpenPorchSF" placeholder="Open Porch Area" value="{{ basement_data['OpenPorchSF'] }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="BsmtFinSF1">Finished Area</label>
                                 <div class="input-group">
-                                    <div class="input-group-addon">sf</div>
+                                    <div class="input-group-addon"><strong>sf</strong></div>
                                     <input type="text" class="form-control" id="BsmtFinSF1" name="BsmtFinSF1" placeholder="Finished Area" value="{{ basement_data['BsmtFinSF1'] }}">
                                 </div>
                             </div>
@@ -73,28 +71,28 @@
                             <div class="form-group">
                                 <label for="GrLivArea">Above Grade Area</label>
                                 <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="GrLivArea" name="GrLivArea" placeholder="Above Grade Area" value="{{ basement_data['GrLivArea'] }}">
                                 </div>
                             </div>
                             <div class="form-group">
                               <label for="2ndFlrSF">Second Floor Area</label>
                               <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="2ndFlrSF" name="2ndFlrSF" placeholder="Second Floor Area" value="{{ basement_data['2ndFlrSF'] }}">
                                </div>
                             </div>
                             <div class="form-group">
                               <label for="ScreenPorch">Screen Porch Area</label>
                               <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="ScreenPorch" name="ScreenPorch" placeholder="Screen Porch Area" value="{{ basement_data['ScreenPorch'] }}">
                                </div>
                             </div>
                             <div class="form-group">
                               <label for="BsmtUnfSF">Finished Area</label>
                               <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="BsmtUnfSF" name="BsmtUnfSF" placeholder="Unfinished Area" value="{{ basement_data['BsmtUnfSF'] }}">
                               </div>
                             </div>
@@ -103,28 +101,28 @@
                             <div class="form-group">
                                 <label for="LotArea">Lot Area</label>
                                 <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="LotArea" name="LotArea" placeholder="Lot Area" value="{{ basement_data['LotArea'] }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="WoodDeckSF">Wood Decks Area</label>
                                 <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="WoodDeckSF" name="WoodDeckSF" placeholder="Wood Decks Area" value="{{ basement_data['WoodDeckSF'] }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="MasVnrArea">Three Season Porch Area</label>
                                 <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="3SsnPorch" name="3SsnPorch" placeholder="Three Season Porch Area" value="{{ basement_data['3SsnPorch'] }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="MasVnrArea">Masonry Veneer Area</label>
                                 <div class="input-group">
-                                  <div class="input-group-addon">sf</div>
+                                  <div class="input-group-addon"><strong>sf</strong></div>
                                   <input type="text" class="form-control" id="MasVnrArea" name="MasVnrArea" placeholder="Masonry Veneer Area" value="{{ basement_data['MasVnrArea'] }}">
                                 </div>
                             </div>
@@ -207,7 +205,7 @@
                                <div class="form-group">
                                 <label for="GarageArea">Size of Garage</label>
                                 <div class="input-group">
-                                    <div class="input-group-addon">sf</div>
+                                    <div class="input-group-addon"><strong>sf</strong></div>
                                     <input type="text" class="form-control" id="GarageArea" name="GarageArea" placeholder="Size of Garage" value="{{ basement_data['GarageArea'] }}">
                                 </div>
                                </div>
@@ -256,7 +254,7 @@
                                <div class="form-group">
                           <label>Pool Area</label>
                            <div class="input-group">
-                              <div class="input-group-addon">sf</div>
+                              <div class="input-group-addon"><strong>sf</strong></div>
                                <input type="text" class="form-control" id="PoolArea" name="PoolArea" placeholder="Pool Area" value="{{ basement_data['PoolArea'] }}">
                             <!--  <select name="PoolArea" class="form-control"  style="width: 100%;">
                                 <option selected="selected" value="NA">Select</option>
@@ -274,7 +272,7 @@
                                <div class="form-group">
                                     <label for="LotFrontage">Street Connected</label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">lf</div>
+                                        <div class="input-group-addon"><strong>lf</strong></div>
                                         <input type="text" class="form-control" id="LotFrontage" name="LotFrontage" placeholder="In linear feet" value="{{ basement_data['LotFrontage'] }}">
                                     </div>
                                </div>
@@ -353,6 +351,16 @@
                                       <option value="12">December</option>
                                   </select>
                                </div>
+                              <div class="form-group">
+                                  <label>Subclass</label>
+                                  <input type="text" class="form-control" id="MSSubClass" name="MSSubClass" value="{{ basement_data['MSSubClass'] }}">
+                              </div>
+                          </div>
+                          <div class="col-md-3">
+                              <div class="form-group">
+                                  <label>Neighborhood</label>
+                                <input type="text" class="form-control" id="Neighborhood" name="Neighborhood" value="{{ basement_data['Neighborhood'] }}" placeholder="Neighborhood">
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -366,7 +374,7 @@
                             <div class="input-group">
                                 <div class="input-group-addon">Sale Price: </div>
                                 <input type="number" class="form-control" id="SalePrice" name="SalePrice"  disabled>
-                                 <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                 <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
 
                             </div>
                         </div>
@@ -396,7 +404,7 @@
                         <div class="form-group">
                           <label for="PersonalIncome">Personal Monthly Income*</label>
                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="number" class="form-control" id="PersonalIncome" name="PersonalIncome" placeholder="Personal Income" value="{{ data['personal_income'] }}" required>
                            </div>
                         </div>
@@ -405,7 +413,7 @@
                         <div class="form-group">
                           <label for="PersonalOutcome">Personal Monthly Outcome*</label>
                              <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="number" class="form-control" name="PersonalOutcome" id="PersonalOutcome" placeholder="Personal Outcome" value="{{ data['personal_outcome'] }}" required>
                              </div>
                         </div>
@@ -421,7 +429,7 @@
                            <div class="form-group">
                             <label for="SpouceIncome">Spouce Monthly Income*</label>
                               <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="text" name="SpouceIncome" id="SpouceIncome" class="form-control input-mini" placeholder="Spouce Income" disabled required>
                               </div>
                            </div>
@@ -430,7 +438,7 @@
                          <div class="form-group">
                           <label for="SpouceOutcome">Spouce Monthly Outcome*</label>
                             <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="text" name="SpouceOutcome" id="SpouceOutcome" class="form-control" placeholder="Spouce Outcome" disabled required>
                             </div>
                         </div>
@@ -441,7 +449,7 @@
                         <div class="form-group">
                           <label for="OtherIncome">Other Income</label>
                              <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                  <input type="number" class="form-control" name="OtherIncome" id="OtherIncome" placeholder="Other Income">
                              </div>
                         </div>
@@ -450,7 +458,7 @@
                         <div class="form-group">
                           <label for="LoanPayment">Desired Monthly Payment*</label>
                              <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="number" class="form-control" name="LoanPayment" id="LoanPayment" placeholder="Desired Loan Payment" value="{{ data['loan_payment'] }}" required>
                              </div>
                         </div>
@@ -462,10 +470,10 @@
                         <div class="form-group">
                           <label>Select Bank</label>
                           <select name="BankSelector" class="form-control"  style="width: 100%;">
-                            <option>National Bank of Greece</option>
-                            <option>Piraeus Bank</option>
-                            <option selected="selected">Eurobank</option>
-                            <option>Alpha Bank</option>
+                            <option>Evil Bank</option>
+                            <option>Dollar Bank</option>
+                            <option selected="selected">Bank Bank (she shot me down)</option>
+                            <option>Beta Bank</option>
                           </select>
                         </div>
                       </div>
@@ -506,7 +514,7 @@
                         <div class="form-group">
                           <label for="FinalPayment">Final Monthly Payment</label>
                             <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-euro"></i></div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="number" class="form-control" id="FinalPayment" name="FinalPayment"  disabled>
                             </div>
                         </div>
