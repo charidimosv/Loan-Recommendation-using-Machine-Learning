@@ -234,7 +234,7 @@
                               </select>
                             </div>
                                 <div class="form-group">
-                                    <label for="GarageYrBlt">Year Garage was Built</label>
+                                    <label for="GarageYrBlt">Gar. Built Year</label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                                         <input type="text" class="form-control" id="GarageYrBlt" name="GarageYrBlt" placeholder="Year garage was built" value="{{ basement_data['GarageYrBlt'] }}">
@@ -401,6 +401,7 @@
                     <div class="box-body">
                    <div class="row">
                       <div class="col-md-6">
+                        <div class="hidden"><input type="text" id="SalePriceHidden" name="SalePriceHidden" ></div>
                         <div class="form-group">
                           <label for="PersonalIncome">Personal Monthly Income*</label>
                            <div class="input-group">
@@ -415,6 +416,32 @@
                              <div class="input-group">
                                 <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
                                 <input type="number" class="form-control" name="PersonalOutcome" id="PersonalOutcome" placeholder="Personal Outcome" value="{{ data['personal_outcome'] }}" required>
+                             </div>
+                        </div>
+                      </div>
+                   </div>
+                      <div class="checkbox">
+                       <label>
+                           <input type="checkbox" name="StableIncomeCheckBox" id="StableIncomeCheckBox"> Stable Income
+                       </label>
+                   </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="OtherIncome">Other Income</label>
+                             <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                 <input type="number" class="form-control" name="OtherIncome" id="OtherIncome" placeholder="Other Income">
+                             </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="Age">Age*</label>
+                             <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input type="number" class="form-control" name="Age" id="Age" placeholder="Participant's Age" value="{{ data['age'] }}" required>
+                                <div class="input-group-addon">Years</div>
                              </div>
                         </div>
                       </div>
@@ -446,26 +473,6 @@
                   </div>
                   <div class="row">
                       <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="OtherIncome">Other Income</label>
-                             <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-                                 <input type="number" class="form-control" name="OtherIncome" id="OtherIncome" placeholder="Other Income">
-                             </div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="LoanPayment">Desired Monthly Payment*</label>
-                             <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-                                <input type="number" class="form-control" name="LoanPayment" id="LoanPayment" placeholder="Desired Loan Payment" value="{{ data['loan_payment'] }}" required>
-                             </div>
-                        </div>
-                      </div>
-                   </div>
-                  <div class="row">
-                      <div class="col-md-6">
                        <!-- select -->
                         <div class="form-group">
                           <label>Select Bank</label>
@@ -479,11 +486,10 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label for="LoanPayment">Desired Duration*</label>
+                          <label for="DesiredPayment">Desired Monthly Payment*</label>
                              <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                                <input type="number" class="form-control" name="LoanDuration" id="LoanDuration" placeholder="Desired Loan Duration" value="{{ data['loan_duration'] }}" required>
-                                <div class="input-group-addon">Years</div>
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                <input type="number" class="form-control" name="DesiredPayment" id="DesiredPayment" placeholder="Desired Loan Payment" value="{{ data['desired_payment'] }}" required>
                              </div>
                         </div>
                       </div>
@@ -500,27 +506,102 @@
           <!-- /.box -->
           <div class="box box-primary" id="result">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Result</h3>
+                    <h3 class="box-title">Recommendations</h3>
                 </div>
                    <div class="box-body">
-                   <div class="row">
-                       <div class="col-md-8">
-                        <div class="form-group">
-                          <label for="LoanType">Loan Type</label>
-                           <input type="text" class="form-control" id="LoanType" name="LoanType"  disabled>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label for="FinalPayment">Final Monthly Payment</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
-                                <input type="number" class="form-control" id="FinalPayment" name="FinalPayment"  disabled>
+                       <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group label-default"><label>Normal One</label></div>
+                               <div class="col-md-5">
+                            <div class="form-group">
+                              <label for="LoanType">Loan Type</label>
+                               <input type="text" class="form-control" id="LoanType" name="LoanType"  disabled>
                             </div>
-                        </div>
-                      </div>
+                          </div>
+                               <div class="col-md-3">
+                            <div class="form-group">
+                              <label for="FinalPayment">Final Monthly Payment</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                    <input type="number" class="form-control" id="FinalPayment" name="FinalPayment"  disabled>
+                                </div>
+                            </div>
+                          </div>
+                               <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="LoanDuration">Loan Duration</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <input type="number" class="form-control" id="LoanDuration" name="LoanDuration"  disabled>
+                                    <div class="input-group-addon">Months</div>
+                                </div>
+                            </div>
+                          </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group label-default"><label>Based on Desired Payment</label></div>
+                               <div class="col-md-5">
+                            <div class="form-group">
+                              <label for="LoanTypeDP">Loan Type</label>
+                               <input type="text" class="form-control" id="LoanTypeDP" name="LoanTypeDP"  disabled>
+                            </div>
+                          </div>
+                               <div class="col-md-3">
+                            <div class="form-group">
+                              <label for="FinalPaymentDP">Final Monthly Payment</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                    <input type="number" class="form-control" id="FinalPaymentDP" name="FinalPaymentDP"  disabled>
+                                </div>
+                            </div>
+                          </div>
+                               <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="LoanDurationDP">Loan Duration</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <input type="number" class="form-control" id="LoanDurationDP" name="LoanDurationDP"  disabled>
+                                    <div class="input-group-addon">Months</div>
+                                </div>
+                            </div>
+                          </div>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-group label-default"><label>Based on Available Income</label></div>
+                               <div class="col-md-5">
+                            <div class="form-group">
+                              <label for="LoanTypeInc">Loan Type</label>
+                               <input type="text" class="form-control" id="LoanTypeInc" name="LoanTypeInc"  disabled>
+                            </div>
+                          </div>
+                               <div class="col-md-3">
+                            <div class="form-group">
+                              <label for="FinalPaymentInc">Final Monthly Payment</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                    <input type="number" class="form-control" id="FinalPaymentInc" name="FinalPaymentInc"  disabled>
+                                </div>
+                            </div>
+                          </div>
+                               <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="LoanDurationInc">Loan Duration</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                    <input type="number" class="form-control" id="LoanDurationInc" name="LoanDurationInc"  disabled>
+                                    <div class="input-group-addon">Months</div>
+                                </div>
+                            </div>
+                          </div>
+                           </div>
+                       </div>
+
                    </div>
-                   </div>
+          </div>
 
             </div>
         </div>
@@ -587,8 +668,8 @@
 
   $('#IncomeForm').submit( function() {
         var data = JSON.stringify($('#IncomeForm').serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {}));
-        //alert(data)
-       event.preventDefault();
+
+      event.preventDefault();
         $.ajax({
 			url: '/index_submited',
                 contentType: 'application/json',
@@ -600,6 +681,27 @@
                     //var jsonResponse = JSON.stringify(response);
                     $('#LoanType').val(response['loan_type']);
                     $('#FinalPayment').val(response['final_payment']);
+                    $('#LoanDuration').val(response['loan_duration']);
+                    if(response['loan_duration_dp'] != 0){
+                        $('#LoanTypeDP').val(response['loan_type']);
+                        $('#FinalPaymentDP').val(response['final_payment_dp']);
+                        $('#LoanDurationDP').val(response['loan_duration_dp']);
+                    }
+                    else{
+                        $('#LoanTypeDP').val("");
+                        $('#FinalPaymentDP').val("");
+                        $('#LoanDurationDP').val("");
+                    }
+                    if(response['loan_duration_inc'] != 0){
+                        $('#LoanTypeInc').val(response['loan_type']);
+                        $('#FinalPaymentInc').val(response['final_payment_inc']);
+                        $('#LoanDurationInc').val(response['loan_duration_inc']);
+                    }
+                    else{
+                        $('#LoanTypeInc').val("");
+                        $('#FinalPaymentInc').val("");
+                        $('#LoanDurationInc').val("");
+                    }
                     $('#ResLink')[0].click();
                 },
                 error: function(error){
@@ -624,6 +726,7 @@
 			        //alert(response['final_payment'])
                     //var jsonResponse = JSON.stringify(response);
                     $('#SalePrice').val(response['sale_price']);
+                    $('#SalePriceHidden').val(response['sale_price']);
                     $("#IncomeFields").prop('disabled',false);
                     $("#SubmitButton").prop('disabled',false);
 

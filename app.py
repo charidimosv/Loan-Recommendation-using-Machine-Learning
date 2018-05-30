@@ -1,5 +1,6 @@
 import warnings
 
+import numpy as np
 import pandas as pd
 from flask import Flask, render_template, request
 from sklearn.linear_model import Lasso
@@ -22,7 +23,7 @@ class LoanRecommender(Flask):
     def __init__(self, *args, **kwargs):
         super(LoanRecommender, self).__init__(*args, **kwargs)
 
-        self.data = {'personal_income': 2000, 'personal_outcome': 1000, 'loan_payment': 500, 'loan_duration': 5}
+        self.data = {'personal_income': 2000, 'personal_outcome': 1000, 'desired_payment': 500, 'age': 30}
 
         self.df_train = pd.read_csv(TRAIN_PATH)
         self.df_test = pd.read_csv(TEST_PATH)
@@ -53,10 +54,24 @@ def index():
 @app.route('/index_submited', methods=['POST'])
 def index_submited():
     content = request.get_json()
-    print(content)
+    #print(content)
     available_income = float(content['PersonalIncome']) - float(content['PersonalOutcome'])
-    final_payment = float(content['LoanPayment'])
-    loan_duration = float(content['LoanDuration'])
+    desired_payment = float(content['DesiredPayment'])
+    age = float(content['Age'])
+
+    max_age = 75
+    max_duration = 30
+
+    loan_duration = min(max_age - age, max_duration) * 12
+
+    loan_price = float(content['SalePriceHidden']) * 0.8
+
+    if 'StableIncomeCheckBox' in content:
+        rate = 0.05 / 12
+        loan_type = 'Conventional with fix rate'
+    else:
+        rate = 0.035 / 12
+        loan_type = 'LIBOR with variable rate'
 
     if 'SpouceCheckBox' in content:
         available_income = available_income + float(content['SpouceIncome']) - float(content['SpouceOutcome'])
@@ -64,24 +79,40 @@ def index_submited():
     if content['OtherIncome']:
         available_income = available_income + float(content['OtherIncome'])
 
-    sale_pricee = 1000  # edo vale olo to daneio
-    sale_pricee = sale_pricee * 0.8
+    # Monthly price based on duration
+    rate_comp1 = 1 / rate
+    temp_rate_comb = pow((1 + rate), loan_duration)
+    rate_comp2 = 1 / (rate * temp_rate_comb)
+    price_duration_based = round(loan_price / (rate_comp1 - rate_comp2), 2)
 
-    years = int(sale_pricee / (available_income * 12) + 1)
-    months = years * 12
+    # Duration based on desired payment
+    price_dp_based = desired_payment
+    temp_dur_comp1 = price_dp_based / (price_dp_based - (loan_price * rate))
+    temp_dur_comp2 = 1 + rate
+    loan_duration_dp = np.log10(temp_dur_comp1) / np.log10(temp_dur_comp2)
+    if np.isnan(loan_duration_dp) or loan_duration_dp > (max_duration*12):
+        loan_duration_dp = 0
+    loan_duration_dp = int(loan_duration_dp)
 
-    final_payment = app.sale_price / months
+    # Duration based on desired payment
+    price_inc_based = available_income
+    temp_dur_comp1 = price_inc_based / (price_inc_based - (loan_price * rate))
+    temp_dur_comp2 = 1 + rate
+    loan_duration_inc = np.log10(temp_dur_comp1) / np.log10(temp_dur_comp2)
+    if np.isnan(loan_duration_inc) or loan_duration_inc > (max_duration*12):
+        loan_duration_inc = 0
+    loan_duration_inc = int(loan_duration_inc)
 
-    if available_income > final_payment:
-        final_payment = (final_payment + available_income) / 2.0
-
-    return pd.io.json.dumps({'final_payment': final_payment, 'loan_type': 'Euribor 3M Σταθερό'})
+    return pd.io.json.dumps(
+        {'final_payment': price_duration_based, 'loan_type': loan_type, 'loan_duration': loan_duration,
+         'final_payment_dp': price_dp_based, 'loan_duration_dp': loan_duration_dp, 'final_payment_inc': price_inc_based,
+         'loan_duration_inc': loan_duration_inc})
 
 
 @app.route('/index_sale_price', methods=['POST'])
 def index_sale_price():
     content = request.get_json()
-    print(content)
+    #print(content)
     df = pd.io.json.json_normalize(content)
     columns = list(df)
     columns.remove('Neighborhood')
