@@ -9,11 +9,35 @@ from sklearn.preprocessing import RobustScaler
 from src.supervised_learning.models.HousePriceRegressor import HousePriceRegressor
 from src.utils.conf import *
 
-app = Flask(__name__)
-
 
 def ignore_warn(*args, **kwargs):
     pass
+
+
+warnings.filterwarnings("ignore")
+warnings.warn = ignore_warn
+
+
+class LoanRecommender(Flask):
+    def __init__(self, *args, **kwargs):
+        super(LoanRecommender, self).__init__(*args, **kwargs)
+
+        self.data = {'personal_income': 2000, 'personal_outcome': 1000, 'loan_payment': 500, 'loan_duration': 5}
+
+        self.df_train = pd.read_csv(TRAIN_PATH)
+        self.df_test = pd.read_csv(TEST_PATH)
+
+        self.basement_data = pd.json.loads(self.df_train.head(1).to_json(orient='records'))[0]
+        self.basement_data['GarageYrBlt'] = int(self.basement_data['GarageYrBlt'])
+
+        self.house_regr = HousePriceRegressor(self.df_train, self.df_test)
+        lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.0006, random_state=1, max_iter=50000))
+        self.house_regr.fit(_model=lasso)
+
+        self.sale_price = 0
+
+
+app = LoanRecommender(__name__)
 
 
 @app.route('/')
@@ -23,8 +47,7 @@ def login():
 
 @app.route('/index', methods=['POST', 'GET'])
 def index():
-    # your code
-    return render_template('index.html', basement_data=basement_data, data=data)
+    return render_template('index.html', basement_data=app.basement_data, data=app.data)
 
 
 @app.route('/index_submited', methods=['POST'])
@@ -41,13 +64,13 @@ def index_submited():
     if content['OtherIncome']:
         available_income = available_income + float(content['OtherIncome'])
 
-    sale_pricee = 1000 #edo vale olo to daneio
+    sale_pricee = 1000  # edo vale olo to daneio
     sale_pricee = sale_pricee * 0.8
 
     years = int(sale_pricee / (available_income * 12) + 1)
     months = years * 12
 
-    final_payment = sale_price / months
+    final_payment = app.sale_price / months
 
     if available_income > final_payment:
         final_payment = (final_payment + available_income) / 2.0
@@ -63,39 +86,18 @@ def index_sale_price():
     columns = list(df)
     columns.remove('Neighborhood')
     df[columns] = df[columns].apply(pd.to_numeric)
-    print(df)
+    # print(df)
 
-    df_random_test = df_test.head(1)
+    df_random_test = app.df_test.head(1)
     for col in df_random_test.columns:
         if col in df.columns:
             df_random_test[col] = df[col]
 
-    sale_price = house_regr.predict(_df_test=df_random_test)
+    sale_price = app.house_regr.predict(_df_test=df_random_test)
     print(sale_price)
 
     return pd.io.json.dumps({'sale_price': sale_price})
 
 
 if __name__ == '__main__':
-    warnings.filterwarnings("ignore")
-    warnings.warn = ignore_warn
-
-    data = {}
-    data['personal_income'] = 2000
-    data['personal_outcome'] = 1000
-    data['loan_payment'] = 500
-    data['loan_duration'] = 5
-
-    df_train = pd.read_csv(TRAIN_PATH)
-    df_test = pd.read_csv(TEST_PATH)
-
-    basement_data = pd.json.loads(df_train.head(1).to_json(orient='records'))[0]
-    basement_data['GarageYrBlt'] = int(basement_data['GarageYrBlt'])
-
-    house_regr = HousePriceRegressor(df_train, df_test)
-    lasso = make_pipeline(RobustScaler(), Lasso(alpha=0.0006, random_state=1, max_iter=50000))
-    house_regr.fit(_model=lasso)
-
-    sale_price = 0
-
     app.run()
