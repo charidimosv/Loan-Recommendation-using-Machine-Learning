@@ -19,7 +19,7 @@ gunicorn==19.8.1
 idna==2.6
 image==1.5.24
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 jmespath==0.9.3
 kiwisolver==1.0.1
 MarkupSafe==1.0
